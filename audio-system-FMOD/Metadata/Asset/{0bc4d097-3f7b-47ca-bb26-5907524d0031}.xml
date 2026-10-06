@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EncodableAsset" id="{0bc4d097-3f7b-47ca-bb26-5907524d0031}">
+		<property name="assetPath">
+			<value>Metronome/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6770c9b4-b71c-4cd7-ae7d-a72926f99b33}</destination>
+		</relationship>
+	</object>
+</objects>
