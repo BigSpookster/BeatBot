@@ -43,6 +43,9 @@ public class MusicManager : MonoBehaviour
         {
             timelineInfo = new TimelineInfo();
             beatCallback = new FMOD.Studio.EVENT_CALLBACK(BeatEventCallback);
+            timelineHandle = GCHandle.Alloc(timelineInfo, GCHandleType.Pinned);
+            musicInstance.setUserData(GCHandle.ToIntPtr(timelineHandle));
+            musicInstance.setCallback(beatCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
 
         }
 
@@ -50,10 +53,21 @@ public class MusicManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        musicInstance.setUserData(IntPtr.Zero);
         musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         musicInstance.release();
+        timelineHandle.Free();
 
     }
+
+#if UNITY_EDITOR
+    void OnGUI()
+    {
+        GUILayout.Box($"Current Beat = {timelineInfo.currentBeat}, Last Marker = {(string) timelineInfo.lastMarker}");
+
+    }
+
+#endif
 
     [AOT.MonoPInvokeCallback(typeof(FMOD.Studio.EVENT_CALLBACK))]
     static FMOD.RESULT BeatEventCallback(FMOD.Studio.EVENT_CALLBACK_TYPE type, IntPtr instancePtr, IntPtr parameterPtr)
