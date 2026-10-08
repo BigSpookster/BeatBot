@@ -5,10 +5,10 @@
 			<value>0</value>
 		</property>
 		<property name="name">
-			<value>Build</value>
+			<value>Desktop</value>
 		</property>
 		<property name="subDirectory">
-			<value>Build</value>
+			<value>C:/Users/Sweet/OneDrive/Documents/Projects/Video Games/BeatBot/audio-system-FMOD/Build</value>
 		</property>
 		<property name="speakerFormat">
 			<value>5</value>
