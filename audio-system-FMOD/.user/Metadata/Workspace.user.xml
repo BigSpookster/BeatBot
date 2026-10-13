@@ -16,7 +16,7 @@
 			<value>AAAAAQAAABwARQB2AGUAbgB0ACAARQBkAGkAdABvAHIAIAAxAAAAQgHZ0MsAAwAAAAAAAP////kAAAX/AAADLwAAAcAAAACoAAAFvwAAAksAAAAAAgAAAAYAAAAAAAAAABcAAAX/AAADLw==</value>
 		</property>
 		<relationship name="activePlatform">
-			<destination>{3a8b61ae-f3af-4ce8-be18-043f57f0f617}</destination>
+			<destination>{1d226105-5a5a-4666-aa83-705f6c63738e}</destination>
 		</relationship>
 	</object>
 	<object class="WorkspaceChangelist" id="{4ff0af33-2239-46f7-9978-6ae611b73844}" />
