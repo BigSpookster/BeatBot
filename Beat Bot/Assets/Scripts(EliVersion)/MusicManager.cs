@@ -16,6 +16,15 @@ public class MusicManager : MonoBehaviour
 
     private FMOD.Studio.EVENT_CALLBACK beatCallback;
 
+    public delegate void BeatEventDelegate();
+    public static event BeatEventDelegate beatUpdated;
+
+    public delegate void MarkerListenerDelegate();
+    public static event MarkerListenerDelegate markerUpdated;
+
+    public static int lastBeat = 0;
+    public static string lastMarkerString = null;
+
     [StructLayout(LayoutKind.Sequential)]
     public class TimelineInfo
     {
@@ -57,6 +66,28 @@ public class MusicManager : MonoBehaviour
         musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         musicInstance.release();
         timelineHandle.Free();
+
+    }
+
+    private void Update()
+    {
+        if (lastMarkerString != timelineInfo.lastMarker)
+        {
+            lastMarkerString = timelineInfo.lastMarker;
+
+            if (markerUpdated != null)
+                markerUpdated();
+
+        }
+
+        if (lastBeat != timelineInfo.currentBeat)
+        {
+            lastBeat = timelineInfo.currentBeat;
+
+            if (beatUpdated != null)
+                beatUpdated();
+
+        }
 
     }
 
