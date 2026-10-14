@@ -938,6 +938,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coyoteTime: 0.1
   jumpBufferTime: 0.1
+  horizontalMovement: {fileID: 6984017036270079600, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
+  jump: {fileID: -7988463625095460678, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
 --- !u!95 &1775856054
 Animator:
   serializedVersion: 7

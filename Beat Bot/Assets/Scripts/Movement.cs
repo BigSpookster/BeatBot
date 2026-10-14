@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
     public float coyoteTime = 0.1f;
     public float jumpBufferTime = 0.1f;
 
+    [SerializeField] private InputActionReference horizontalMovement;
+    [SerializeField] private InputActionReference jump;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -20,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
+        float horizontal = horizontalMovement.action.ReadValue<Vector2>().x;
 
         // This line is used to control BeatBots speed.
         rb.linearVelocity = new Vector2(horizontal * 5, rb.linearVelocity.y);
@@ -37,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         // Jump Buffer
         //This checks if the jump button is pressed.
         //If it is the jump buffer window is updated and saves the input for some time.
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.JoystickButton0))
+        if (jump.action.WasPressedThisFrame())
             jumpBufferCounter = jumpBufferTime;
             //if jump is not pressed the window counts down back to 0.
         else
@@ -68,4 +73,19 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = false;
     }
+
+    private void OnEnable()
+    {
+        horizontalMovement.action.Enable();
+        jump.action.Enable();
+
+    }
+
+    private void OnDisable()
+    {
+        horizontalMovement.action.Disable();
+        jump.action.Disable();
+
+    }
+
 }
