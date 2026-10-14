@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private float horizontal;
+
+    [SerializeField] private float speed;
+
     private Rigidbody2D rb;
     private Animator anim;
     private bool isGrounded;
@@ -25,10 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        float horizontal = horizontalMovement.action.ReadValue<Vector2>().x;
-
-        // This line is used to control BeatBots speed.
-        rb.linearVelocity = new Vector2(horizontal * 5, rb.linearVelocity.y);
+        horizontal = horizontalMovement.action.ReadValue<Vector2>().x;
 
         // Coyote Time Code
         //This runs if bb is touching a floor.
@@ -62,6 +63,13 @@ public class PlayerMovement : MonoBehaviour
         if (horizontal != 0)
             //This changes the size and orientation of bb based on his x,y, and z values.
             transform.localScale = new Vector3(Mathf.Sign(horizontal) * Mathf.Abs(transform.localScale.x),transform.localScale.y,1);
+    }
+
+    private void FixedUpdate()
+    {
+        // This line is used to control BeatBots speed.
+        rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+
     }
 
     private void OnCollisionStay2D(Collision2D collision)

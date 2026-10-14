@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class SwordEnemyScript : Enemy
 {
     private CapsuleCollider2D swordCollider = null;
     private SpriteRenderer swordSprite = null;
