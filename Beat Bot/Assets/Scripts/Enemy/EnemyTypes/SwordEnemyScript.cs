@@ -15,8 +15,10 @@ public class SwordEnemyScript : Enemy
     [SerializeField] private string stringToWaitFor;
     */
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         nextAttack = attackInterval - 1;
 
         // Finding the correct child

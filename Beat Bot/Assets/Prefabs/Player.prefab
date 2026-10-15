@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9161432567029851019}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 4106376204345845636}
   - component: {fileID: 6246253058139221318}
   - component: {fileID: 3282213344670210839}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BB1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,6 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b48594cd1d369c42bb6bd751269ae48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
   coyoteTime: 0.1
   jumpBufferTime: 0.1
   horizontalMovement: {fileID: 6984017036270079600, guid: 14dce993a28e6cd499cae05436628e14, type: 3}

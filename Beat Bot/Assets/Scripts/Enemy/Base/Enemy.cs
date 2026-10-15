@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable
+public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckable
 {
     [field: SerializeField] public float MaxHealth {get; set;}
 
@@ -10,14 +10,28 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable
 
     public bool IsFacingRight {get; set;} = false;
 
+    public bool IsAggroed {get; set;}
+
+    public bool IsWithinStrikingDistance {get; set;}
+    
+
     /* State Machine Variables */
 
     public EnemyStateMachine StateMachine {get; set;}
     public EnemyIdleState IdleState {get; set;}
     public EnemyChaseState ChaseState {get; set;}
     public EnemyAttackState AttackState {get; set;}
+
+    /* Idle Variables */
+    public float RandomMovementRange = 5f;
+    public float RandomMovementSpeed = 1f;
+
+    public Transform[] patrolPoints;
+
+    /* Aggro Variables */
+    public float AggroedMoveSpeed = 1.75f;
     
-    private void Awake()
+    protected virtual void Awake()
     {
         StateMachine = new EnemyStateMachine();
 
@@ -83,11 +97,27 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable
     }
 
 
+    /* Distance Check Functions */
+
+    public void SetAggroStatus(bool isAggroed)
+    {
+        IsAggroed = isAggroed;
+
+    }
+
+    public void SetStrikingDistance(bool isWithinStrikingDistance)
+    {
+        IsWithinStrikingDistance = isWithinStrikingDistance;
+        
+    }
+
+
     /* Movement Functions: */
 
     public void MoveEnemy(Vector2 velocity)
     {
-        
+        RB.linearVelocity = new Vector2(velocity.x, RB.linearVelocity.y);
+        CheckForLeftOrRightFacing(velocity);
 
     }
 
