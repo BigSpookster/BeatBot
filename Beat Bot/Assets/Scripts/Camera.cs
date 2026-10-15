@@ -6,6 +6,8 @@ public class CameraFollow : MonoBehaviour
     public float smoothSpeed = 0.125f;
     public Vector3 offset = new Vector3(0f, 2f, -10f);
 
+    //This is used to determien when the camera moves upwards.
+    public float yMovement = 3f;
     private float fixedY;
 
     void Start()
@@ -17,9 +19,17 @@ public class CameraFollow : MonoBehaviour
     void LateUpdate()
     {
         if (player == null) return;
-
+        float targetY = fixedY;
+        if(player.position.y > fixedY + yMovement)
+        {
+            targetY = player.position.y - yMovement + fixedY + offset.y;
+        }
+        else
+        {
+            targetY = fixedY + offset.y;
+        }
         // Follow player's X, keep Y fixed, and maintain Z offset
-        Vector3 targetPosition = new Vector3(player.position.x + offset.x, fixedY, offset.z);
+        Vector3 targetPosition = new Vector3(player.position.x + offset.x, targetY, offset.z);
         
         // Smoothly interpolate position
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
