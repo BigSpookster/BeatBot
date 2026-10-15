@@ -1,7 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private float horizontal;
+
+    [SerializeField] private float speed;
+
     private Rigidbody2D rb;
     private Animator anim;
     private bool isGrounded;
@@ -10,6 +15,10 @@ public class PlayerMovement : MonoBehaviour
     //Change these values to adjust the coyote and jump buffer time.
     public float coyoteTime = 0.1f;
     public float jumpBufferTime = 0.1f;
+
+    [SerializeField] private InputActionReference horizontalMovement;
+    [SerializeField] private InputActionReference jump;
+
 
     void Start()
     {
@@ -20,10 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-
-        // This line is used to control BeatBots speed.
-        rb.linearVelocity = new Vector2(horizontal * 5, rb.linearVelocity.y);
+        horizontal = horizontalMovement.action.ReadValue<Vector2>().x;
 
         // Coyote Time Code
         //This runs if bb is touching a floor.
@@ -37,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         // Jump Buffer
         //This checks if the jump button is pressed.
         //If it is the jump buffer window is updated and saves the input for some time.
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.JoystickButton0))
+        if (jump.action.WasPressedThisFrame())
             jumpBufferCounter = jumpBufferTime;
             //if jump is not pressed the window counts down back to 0.
         else
@@ -59,13 +65,47 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(Mathf.Sign(horizontal) * Mathf.Abs(transform.localScale.x),transform.localScale.y,1);
     }
 
+    private void FixedUpdate()
+    {
+        // This line is used to control BeatBots speed.
+        rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+
+    }
+
+  
     private void OnCollisionStay2D(Collision2D collision)
     {
-        isGrounded = true;
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            if (contact.normal.y > 0.5f)
+            {
+                isGrounded = true;
+                return;
+            }
+        }
+
+        isGrounded = false;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         isGrounded = false;
     }
+
+
+
+    private void OnEnable()
+    {
+        horizontalMovement.action.Enable();
+        jump.action.Enable();
+
+    }
+
+    private void OnDisable()
+    {
+        horizontalMovement.action.Disable();
+        jump.action.Disable();
+
+    }
+
 }
