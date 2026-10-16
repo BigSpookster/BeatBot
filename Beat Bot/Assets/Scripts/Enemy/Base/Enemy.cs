@@ -1,12 +1,24 @@
 using UnityEngine;
+using FMODUnity;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckable
 {
+    protected Transform playerTransform;
+
     [field: SerializeField] public float MaxHealth {get; set;}
 
     public float CurrentHealth {get; set;}
 
     public Rigidbody2D RB {get; set;}
+
+    [SerializeField] protected int attackInterval = 1;
+    protected int nextAttack = 0;
+
+    /*  The following code is for using the markers,
+        which I'm unsure is useful right now
+    [SerializeField] private bool waitForString = false;
+    [SerializeField] private string stringToWaitFor;
+    */
 
     public bool IsFacingRight {get; set;} = false;
 
@@ -23,21 +35,32 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     public EnemyAttackState AttackState {get; set;}
 
     /* Idle Variables */
-    public float RandomMovementRange = 5f;
-    public float RandomMovementSpeed = 1f;
+    public float MovementSpeed = 1f;
 
     public Transform[] patrolPoints;
 
-    /* Aggro Variables */
+    /* Chase Variables */
     public float AggroedMoveSpeed = 1.75f;
+
+    /* Attack State Variables */
+    public bool InAttackState = false;
     
     protected virtual void Awake()
     {
+        nextAttack = attackInterval - 1;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player != null)
+            playerTransform = player.transform;
+
         StateMachine = new EnemyStateMachine();
 
         IdleState = new EnemyIdleState(this, StateMachine);
         ChaseState = new EnemyChaseState(this, StateMachine);
         AttackState = new EnemyAttackState(this, StateMachine);
+
+        MusicManager.beatUpdated += Attack;
 
     }
 
@@ -62,6 +85,9 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
         StateMachine.CurrentEnemyState.PhysicsUpdate();
 
     }
+
+    // A base enemy has no specific attack
+    protected virtual void Attack() {}
 
     /* Animation Triggers */
 
@@ -114,16 +140,11 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
     /* Movement Functions: */
 
-    public void MoveEnemy(Vector2 velocity)
-    {
-        RB.linearVelocity = new Vector2(velocity.x, RB.linearVelocity.y);
-        CheckForLeftOrRightFacing(velocity);
+    public virtual void MoveEnemy(Vector2 normalizedVelocity, float speed) {}
 
-    }
-
-    public void CheckForLeftOrRightFacing(Vector2 velocity)
+    public void CheckForLeftOrRightFacing(Vector2 direction)
     {
-        if (IsFacingRight && velocity.x < 0f)
+        if (IsFacingRight && direction.x < 0f)
         {
             Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
@@ -131,7 +152,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
         }
 
-        else if (!IsFacingRight && velocity.x > 0f)
+        else if (!IsFacingRight && direction.x > 0f)
         {
             Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
@@ -139,6 +160,13 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
         }
 
+    }
+
+    private void OnDestroy()
+    {
+        // Stop managing the music
+        MusicManager.beatUpdated -= Attack;
+        
     }
 
 }

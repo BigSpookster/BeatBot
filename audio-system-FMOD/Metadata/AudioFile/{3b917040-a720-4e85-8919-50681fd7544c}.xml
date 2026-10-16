@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{3b917040-a720-4e85-8919-50681fd7544c}">
+		<property name="assetPath">
+			<value>Junkyard/Drums_Beatbot_Junkyard.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>134.34775510204082</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6770c9b4-b71c-4cd7-ae7d-a72926f99b33}</destination>
+		</relationship>
+	</object>
+</objects>

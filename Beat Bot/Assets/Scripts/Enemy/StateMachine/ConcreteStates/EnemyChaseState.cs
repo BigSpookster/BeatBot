@@ -34,6 +34,7 @@ public class EnemyChaseState : EnemyState
     {
         base.FrameUpdate();
 
+        // Enter Attack State
         if (enemy.IsWithinStrikingDistance)
         {
             enemy.StateMachine.ChangeState(enemy.AttackState);
@@ -41,6 +42,7 @@ public class EnemyChaseState : EnemyState
 
         }
 
+        // Enter Idle State
         if (!enemy.IsAggroed)
         {
             enemy.StateMachine.ChangeState(enemy.IdleState);
@@ -50,7 +52,7 @@ public class EnemyChaseState : EnemyState
 
         Vector2 moveDirection = (playerTransform.position - enemy.transform.position).normalized;
 
-        enemy.MoveEnemy(moveDirection * enemy.AggroedMoveSpeed);
+        enemy.MoveEnemy(moveDirection, enemy.AggroedMoveSpeed);
 
     }
 

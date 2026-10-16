@@ -5,22 +5,10 @@ public class SwordEnemyScript : Enemy
     private CapsuleCollider2D swordCollider = null;
     private SpriteRenderer swordSprite = null;
 
-    [SerializeField] private int attackInterval;
-    private int nextAttack = 0;
-
-
-    /*  The following code is for using the markers,
-        which I'm unsure is useful right now
-    [SerializeField] private bool waitForString = false;
-    [SerializeField] private string stringToWaitFor;
-    */
-
     protected override void Awake()
     {
         base.Awake();
         
-        nextAttack = attackInterval - 1;
-
         // Finding the correct child
         Transform checkChildTranform = transform.Find("Sword");
 
@@ -36,19 +24,11 @@ public class SwordEnemyScript : Enemy
         else
             Debug.Log("Error: sword child was not found...");
 
-        // Music Managment
-        MusicManager.beatUpdated += Attack;
-        
     }
 
-    private void OnDestroy()
-    {
-        // Stop managing the music
-        MusicManager.beatUpdated -= Attack;
-        
-    }
+    
 
-    private void Attack()
+    protected override void Attack()
     {
         // If we have not reached the next attack, decrement
         if (nextAttack > 0)
@@ -64,10 +44,29 @@ public class SwordEnemyScript : Enemy
         // Otherwise, toggle the sword and reset nextAttack
         else
         {
-            EnableSword();
+            // Only perform the attack if enemy is in attack state!
+            if (InAttackState)
+            {
+                Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
+                CheckForLeftOrRightFacing(directionOfPlayer);
+                EnableSword();
+
+            }
+
             nextAttack = attackInterval - 1;
 
         }
+
+    }
+
+    public override void MoveEnemy(Vector2 normalizedVelocity, float speed)
+    {
+        base.MoveEnemy(normalizedVelocity, speed);
+
+        int makeEqualOne = Mathf.RoundToInt(normalizedVelocity.x);
+
+        RB.linearVelocity = new Vector2(makeEqualOne * speed, RB.linearVelocity.y);
+        CheckForLeftOrRightFacing(normalizedVelocity);
 
     }
 

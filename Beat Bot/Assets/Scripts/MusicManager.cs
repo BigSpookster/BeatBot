@@ -91,6 +91,12 @@ public class MusicManager : MonoBehaviour
 
     }
 
+    public void PlayOneShotSound(EventReference sound, Vector3 worldPos)
+    {
+        RuntimeManager.PlayOneShot(sound, worldPos);
+
+    }
+
 #if UNITY_EDITOR
     void OnGUI()
     {

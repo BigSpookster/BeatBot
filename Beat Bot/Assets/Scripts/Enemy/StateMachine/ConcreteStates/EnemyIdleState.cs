@@ -57,7 +57,7 @@ public class EnemyIdleState : EnemyState
     {
         base.PhysicsUpdate();
 
-        enemy.MoveEnemy(direction * enemy.RandomMovementSpeed);
+        enemy.MoveEnemy(direction, enemy.MovementSpeed);
         
     }
 
@@ -69,12 +69,6 @@ public class EnemyIdleState : EnemyState
         nextPos = (nextPos + 1) % numPatrolPoints;
 
         return tempVector;
-
-    }
-
-    private Vector3 GetRandomPointInRange()
-    {
-        return enemy.transform.position + new Vector3(Random.Range(-enemy.RandomMovementRange * 0.5f, enemy.RandomMovementRange * 0.5f), 0);
 
     }
 
