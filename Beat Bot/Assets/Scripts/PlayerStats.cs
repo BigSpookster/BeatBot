@@ -1,25 +1,21 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PlayerStats : MonoBehaviour
 {
-    // Player's Maximum Health
     [SerializeField] private float maxHealth;
-
-    // How Long Player is Invincible after taking damage
     [SerializeField] private float takeDamageCooldown;
-
-    // Time When Player can take damage again
     private float nextDamageTime = 0f;
-
-    // Player's Current Health
     private float currentHealth;
-
-    // Player Loses All Health
     private float deathState = 0;
-
-    // Reference to HealthBar script
     public HealthBar healthBar;
+    [SerializeField] private GameObject deathScreen;
+    [SerializeField] private Transform respawnPoint;
+    [SerializeField] private CanvasGroup deathText;
+    [SerializeField] private float deathTextFadeTime;
+    private float elapsedTime;
+    private bool isDeadYet = false;
 
     private void Start() 
     {
@@ -71,14 +67,36 @@ public class PlayerStats : MonoBehaviour
         }
 
         // If Statement - Death State (If player health reaches 0, player is dead)
-        if(currentHealth <= deathState) {
+        if(currentHealth <= deathState && !isDeadYet) {
             Die();
         }
     }
 
     private void Die() 
     {
-        Debug.Log("You have died!");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        isDeadYet = true;
+
+        deathScreen.SetActive(true);
+        deathText.alpha = 0f;
+
+        StartCoroutine(FadeInDeathText());
+
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private IEnumerator FadeInDeathText() 
+    {
+        elapsedTime = 0f;
+
+        while(elapsedTime < deathTextFadeTime)
+        {
+            elapsedTime += Time.deltaTime;
+
+            deathText.alpha = Mathf.Lerp(0f, 1f, elapsedTime / deathTextFadeTime);
+
+            yield return null;
+        }
+
+        deathText.alpha = 1f;
     }
 }
