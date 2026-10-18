@@ -170,21 +170,6 @@ MonoBehaviour:
   m_AtlasPopulationMode: 1
   InternalDynamicOS: 0
   m_GlyphTable:
-  - m_Index: 67
-    m_Metrics:
-      m_Width: 65.25
-      m_Height: 12.15625
-      m_HorizontalBearingX: 0.1875
-      m_HorizontalBearingY: -6.75
-      m_HorizontalAdvance: 65.0625
-    m_GlyphRect:
-      m_X: 127
-      m_Y: 10
-      m_Width: 66
-      m_Height: 13
-    m_Scale: 1
-    m_AtlasIndex: 0
-    m_ClassDefinitionType: 0
   - m_Index: 337
     m_Metrics:
       m_Width: 97.375
@@ -197,6 +182,21 @@ MonoBehaviour:
       m_Y: 10
       m_Width: 98
       m_Height: 16
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 67
+    m_Metrics:
+      m_Width: 65.25
+      m_Height: 12.15625
+      m_HorizontalBearingX: 0.1875
+      m_HorizontalBearingY: -6.75
+      m_HorizontalAdvance: 65.0625
+    m_GlyphRect:
+      m_X: 127
+      m_Y: 10
+      m_Width: 66
+      m_Height: 13
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
@@ -322,12 +322,12 @@ MonoBehaviour:
     m_ClassDefinitionType: 0
   m_CharacterTable:
   - m_ElementType: 1
-    m_Unicode: 95
-    m_GlyphIndex: 67
-    m_Scale: 1
-  - m_ElementType: 1
     m_Unicode: 8230
     m_GlyphIndex: 337
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 95
+    m_GlyphIndex: 67
     m_Scale: 1
   - m_ElementType: 1
     m_Unicode: 89
