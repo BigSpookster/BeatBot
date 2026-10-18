@@ -232,7 +232,7 @@ Transform:
   m_GameObject: {fileID: 300232449}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 698.5355, y: 479.77948, z: -0.12184037}
+  m_LocalPosition: {x: -13.98, y: -1.48, z: -0.12184037}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1300,6 +1300,7 @@ GameObject:
   - component: {fileID: 1775856053}
   - component: {fileID: 1775856054}
   - component: {fileID: 1775856055}
+  - component: {fileID: 1775856056}
   m_Layer: 0
   m_Name: BB1
   m_TagString: Untagged
@@ -1505,6 +1506,19 @@ MonoBehaviour:
   deathScreenUI: {fileID: 1939272463}
   playerDeath: {fileID: 0}
   healthBar: {fileID: 767174345}
+--- !u!114 &1775856056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775856048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4555712a5dc924489ef48c56a003f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnPoint: {fileID: 0}
 --- !u!1 &1848875820
 GameObject:
   m_ObjectHideFlags: 0

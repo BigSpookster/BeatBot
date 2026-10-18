@@ -73,11 +73,14 @@ public class PlayerStats : MonoBehaviour
 
     private void Die() 
     {
+        // Change death state to true
         isDeadYet = true;
 
-        deathScreenUI.ShowDeathScreen();
+        // Deactivate player
+        playerDeath.HandleDeath();
 
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // Show death screen
+        deathScreenUI.ShowDeathScreen();
     }
 
 }
