@@ -984,11 +984,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b48594cd1d369c42bb6bd751269ae48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 6
   coyoteTime: 0.1
   jumpBufferTime: 0.1
   horizontalMovement: {fileID: 2840526833406477002, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
   jump: {fileID: -7988463625095460678, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
+  jumpCutMultiplier: 0.5
+  weaponAbility: {fileID: 0}
+  dashSpeed: 14
+  dashDuration: 0.18
+  dashCooldown: 0.6
 --- !u!95 &1775856054
 Animator:
   serializedVersion: 7
