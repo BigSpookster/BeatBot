@@ -12,35 +12,26 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
-    //Change these values to adjust the coyote and jump buffer time.
     public float coyoteTime = 0.1f;
     public float jumpBufferTime = 0.1f;
-    //Use these variables for the dash mechanics.
+    //Dash Stuff
     private bool isDashing;
     private float dashTimeCounter;
     private float dashDirection;
     private float dashCooldownCounter;
+    private bool hasAirDashed;
 
-    [SerializeField] private InputActionReference horizontalMovement;
-    
+    // Separate left and right movement inputs
+    [SerializeField] private InputActionReference moveLeft;
+    [SerializeField] private InputActionReference moveRight;
+
     [SerializeField] private InputActionReference jump;
-
     [SerializeField] private float jumpCutMultiplier = 0.5f;
-
     [SerializeField] private InputActionReference weaponAbility;
 
-    //These are the variables for the dash.
-    //Used for BB speed in the dash
     [SerializeField] private float dashSpeed = 14f;
-    //Used for how long the dash is active for
     [SerializeField] private float dashDuration = 0.18f;
-    //Used for how long dash cant be used again for.
-    [SerializeField] private float dashCooldown = 0.6f;
-
-
-
-
-
+    [SerializeField] private float dashCooldown = 1f;
 
     void Start()
     {
@@ -51,77 +42,139 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        horizontal = horizontalMovement.action.ReadValue<Vector2>().x;
-        if(weaponAbility.action.WasPressedThisFrame() && !isDashing && dashCooldownCounter <= 0 ){
-            StartDash();
+        // Read left and right movement using the new Input System
+        bool leftPressed = moveLeft.action.IsPressed();
+        bool rightPressed = moveRight.action.IsPressed();
+
+        // Determine horizontal movement and animation direction
+        if (leftPressed && !rightPressed)
+        {
+            horizontal = -1f;
         }
-        if(isDashing){
+        else if (rightPressed && !leftPressed)
+        {
+            horizontal = 1f;
+        }
+        else if (leftPressed && rightPressed)
+        {
+            // If both are held, use whichever was pressed most recently
+            if (moveLeft.action.WasPressedThisFrame())
+            {
+                horizontal = -1f;
+            }
+            else if (moveRight.action.WasPressedThisFrame())
+            {
+                horizontal = 1f;
+            }
+        }
+        else
+        {
+            horizontal = 0f;
+        }
+
+        // Update the Animator's movement direction
+        anim.SetFloat("MoveX", horizontal);
+
+        // Activate the weapon ability dash
+        if (weaponAbility.action.WasPressedThisFrame() && !isDashing)
+        {
+            if (isGrounded && dashCooldownCounter <= 0f)
+            {
+                StartDash();
+            }
+            else if (!isGrounded && !hasAirDashed)
+            {
+                StartDash();
+            }
+        }
+
+        // Handle dash duration
+        if (isDashing)
+        {
             dashTimeCounter -= Time.deltaTime;
-            if(dashTimeCounter <= 0){
+
+            if (dashTimeCounter <= 0)
+            {
                 isDashing = false;
             }
         }
-        if(dashCooldownCounter > 0f){
+
+        // Handle dash cooldown
+        if (dashCooldownCounter > 0f)
+        {
             dashCooldownCounter -= Time.deltaTime;
         }
 
-        // Coyote Time Code
-        //This runs if bb is touching a floor.
+        // Handle coyote time for jumping
         if (isGrounded)
+        {
             coyoteTimeCounter = coyoteTime;
+        }
         else
-            //This runs if bb is not touching the floor.
-            //It  counts down to 0 and the player has time to jump during that window.        
+        {
             coyoteTimeCounter -= Time.deltaTime;
+        }
 
-        // Jump Buffer
-        //This checks if the jump button is pressed.
-        //If it is the jump buffer window is updated and saves the input for some time.
+        // Buffer jump input
         if (jump.action.WasPressedThisFrame())
+        {
+            Debug.Log("JUMP PRESSED");
             jumpBufferCounter = jumpBufferTime;
-            //if jump is not pressed the window counts down back to 0.
+        }
         else
+        {
             jumpBufferCounter -= Time.deltaTime;
+        }
 
-        // Jump
+        // Jump if the player is grounded or within coyote time
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 10);
-
             jumpBufferCounter = 0f;
             coyoteTimeCounter = 0f;
         }
-        //This is used to make jump more dynamic with the button held length.
-        if (jump.action.WasReleasedThisFrame() && rb.linearVelocity.y > 0f){
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * jumpCutMultiplier);
+
+        // Cut the jump short when the jump button is released
+        if (jump.action.WasReleasedThisFrame() && rb.linearVelocity.y > 0f)
+        {
+            rb.linearVelocity = new Vector2(
+                rb.linearVelocity.x,
+                rb.linearVelocity.y * jumpCutMultiplier
+            );
         }
 
-        // This if statement is used to keep bb facing the correct direction while moving.
-        //It runs if there is a horizontal input.
-        if (horizontal != 0)
-            //This changes the size and orientation of bb based on his x,y, and z values.
-            transform.localScale = new Vector3(Mathf.Sign(horizontal) * Mathf.Abs(transform.localScale.x),transform.localScale.y,1);
+
     }
 
     private void FixedUpdate()
     {
-        if(isDashing){
-            rb.linearVelocity = new Vector2(dashDirection * dashSpeed, rb.linearVelocity.y); 
+        // Apply dash movement or regular movement
+        if (isDashing)
+        {
+            rb.linearVelocity = new Vector2(
+                dashDirection * dashSpeed,
+                rb.linearVelocity.y
+            );
         }
-        else{
-            // This line is used to control BeatBots speed.
-            rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+        else
+        {
+            rb.linearVelocity = new Vector2(
+                horizontal * speed,
+                rb.linearVelocity.y
+            );
         }
     }
 
-  
     private void OnCollisionStay2D(Collision2D collision)
     {
+        // Check whether the player is standing on a surface
         foreach (ContactPoint2D contact in collision.contacts)
         {
             if (contact.normal.y > 0.5f)
             {
                 isGrounded = true;
+                hasAirDashed = false; // Reset air dash when grounded
+                dashCooldownCounter = 0f; // Reset dash cooldown when grounded
                 return;
             }
         }
@@ -132,39 +185,47 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         isGrounded = false;
+        hasAirDashed = false; // Reset air dash when leaving the ground
+        return;
     }
-
-
 
     private void OnEnable()
     {
-        horizontalMovement.action.Enable();
+        // Enable all input actions
+        moveLeft.action.Enable();
+        moveRight.action.Enable();
         jump.action.Enable();
         weaponAbility.action.Enable();
-
     }
 
     private void OnDisable()
     {
-        horizontalMovement.action.Disable();
+        // Disable all input actions
+        moveLeft.action.Disable();
+        moveRight.action.Disable();
         jump.action.Disable();
         weaponAbility.action.Disable();
     }
 
-    private void StartDash(){
-        //This checks if BB is pressing left or right input
-        if(horizontal != 0f){
-            //This converts the input based on the direction inputted
+    private void StartDash()
+    {
+        if (horizontal != 0f)
+        {
             dashDirection = Mathf.Sign(horizontal);
         }
-        else{
+        else
+        {
             dashDirection = Mathf.Sign(transform.localScale.x);
         }
-        //This tells the system that the dash ability is active.
+
+        // Mark the air dash as used if the player is airborne
+        if (!isGrounded)
+        {
+            hasAirDashed = true;
+        }
+
         isDashing = true;
-        //This updates the activation timer to the length of the ability.
         dashTimeCounter = dashDuration;
         dashCooldownCounter = dashCooldown;
     }
-
 }
