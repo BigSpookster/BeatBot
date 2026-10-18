@@ -990,7 +990,7 @@ MonoBehaviour:
   horizontalMovement: {fileID: 2840526833406477002, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
   jump: {fileID: -7988463625095460678, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
   jumpCutMultiplier: 0.5
-  weaponAbility: {fileID: 0}
+  weaponAbility: {fileID: 5134705696063272799, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
   dashSpeed: 14
   dashDuration: 0.18
   dashCooldown: 0.6

@@ -41,9 +41,6 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    [SerializeField] private InputActionReference horizontalMovement;
-    [SerializeField] private InputActionReference jump;
-
 
     void Start()
     {
