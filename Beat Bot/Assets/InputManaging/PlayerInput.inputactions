@@ -133,6 +133,37 @@
                     "action": "WeaponAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
+                    "name": "2D Vector",
+                    "id": "4ab4c805-3416-4eb6-8e9e-2c05b232e11e",
+                    "path": "2DVector(mode=2)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Horizontal Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "left",
+                    "id": "85ce8f9e-c9b8-4f94-b045-236ea0a3f91d",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Controller",
+                    "action": "Horizontal Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "09be7aec-e2b5-4315-b00d-8cbc5fb27275",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Controller",
+                    "action": "Horizontal Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

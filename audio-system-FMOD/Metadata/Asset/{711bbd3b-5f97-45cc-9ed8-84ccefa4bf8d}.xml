@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EncodableAsset" id="{711bbd3b-5f97-45cc-9ed8-84ccefa4bf8d}">
+		<property name="assetPath">
+			<value>Enemy/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6770c9b4-b71c-4cd7-ae7d-a72926f99b33}</destination>
+		</relationship>
+	</object>
+</objects>
