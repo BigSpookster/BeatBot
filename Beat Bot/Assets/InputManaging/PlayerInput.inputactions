@@ -17,18 +17,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Left/Right",
-                    "type": "Value",
-                    "id": "8ef2ec86-847b-41ec-82b3-04a75219422d",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "WeaponAbility",
                     "type": "Button",
                     "id": "af2fa3b0-2027-4dee-b79e-689c0003c32f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Left",
+                    "type": "Button",
+                    "id": "2ea4703f-fa9b-4f94-a3a7-646b40d04448",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Right",
+                    "type": "Button",
+                    "id": "c5ff9c7c-1ca5-421e-b883-b49a1785f38b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -59,61 +68,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "2D Vector",
-                    "id": "68280274-c6fe-4004-8b3c-9f961d7ce3d5",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Left/Right",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "f08bdc0b-cf31-4a02-a5d3-d8124a05e70a",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Left/Right",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "50fbe831-1d88-4ede-a986-42ef8161e8c5",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Left/Right",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "131a282a-40a7-4401-b9c8-add3a27d2abc",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard",
-                    "action": "Left/Right",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "fdf585a4-e231-40ed-b838-8e43a402eb80",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard",
-                    "action": "Left/Right",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "0c4e26f4-d0f1-4abb-b7b6-34463d9c3711",
                     "path": "<Keyboard>/w",
@@ -125,37 +79,48 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "2D Vector",
-                    "id": "4ab4c805-3416-4eb6-8e9e-2c05b232e11e",
-                    "path": "2DVector(mode=2)",
+                    "name": "",
+                    "id": "65b0c22b-433c-4a59-80c0-8d1f6ede3923",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Left/Right",
-                    "isComposite": true,
+                    "groups": ";Keyboard",
+                    "action": "Left",
+                    "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "left",
-                    "id": "85ce8f9e-c9b8-4f94-b045-236ea0a3f91d",
-                    "path": "<Gamepad>/leftStick/left",
+                    "name": "",
+                    "id": "7dab3f80-b6ef-4e06-b67c-7bbb1265746d",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Controller",
-                    "action": "Left/Right",
+                    "groups": "",
+                    "action": "Left",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "right",
-                    "id": "09be7aec-e2b5-4315-b00d-8cbc5fb27275",
-                    "path": "<Gamepad>/leftStick/right",
+                    "name": "",
+                    "id": "04377868-a222-476d-82dd-e487fc2727b9",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Controller",
-                    "action": "Left/Right",
+                    "groups": ";Keyboard",
+                    "action": "Right",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a34fac48-0147-47f4-ada0-e856d6e3a6ea",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
