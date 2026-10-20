@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpikeObstacle : MonoBehaviour
+public class ObstacleDamage : MonoBehaviour
 {
     // Damage InanimateObject inflicts
     public float damage;
