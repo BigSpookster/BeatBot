@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        Debug.Log("PlayerMovement script is active!");
     }
 
     void Update()
@@ -118,7 +117,6 @@ public class PlayerMovement : MonoBehaviour
         // Buffer jump input
         if (jump.action.WasPressedThisFrame())
         {
-            Debug.Log("JUMP PRESSED");
             jumpBufferCounter = jumpBufferTime;
         }
         else
