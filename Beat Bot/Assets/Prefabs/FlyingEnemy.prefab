@@ -164,6 +164,20 @@ MonoBehaviour:
   AggroedMoveSpeed: 1.75
   InAttackState: 0
   ChargeSpeed: 14
+  windupSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  attackSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &4850058513274984523
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,7 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8076417525885832394}
   - component: {fileID: 8062288897555157242}
-  - component: {fileID: 1045673223374957319}
+  - component: {fileID: 451842377508386524}
   m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
@@ -322,8 +336,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.87058824, g: 0.3957406, b: 0, a: 1}
+  m_Sprite: {fileID: -8628259258565639076, guid: 260cf1bfa33a34a0e98e6d85591d5bfb, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -333,8 +347,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &1045673223374957319
-CapsuleCollider2D:
+--- !u!58 &451842377508386524
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -367,9 +381,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1}
-  m_Direction: 0
+  m_Offset: {x: -0.075, y: -0.035}
+  m_Radius: 0.45
 --- !u!1 &5907136714052049230
 GameObject:
   m_ObjectHideFlags: 0
