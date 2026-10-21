@@ -1,14 +1,13 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField] private float maxHealth;
     [SerializeField] private float takeDamageCooldown;
     [SerializeField] private DeathScreenUI deathScreenUI;
     [SerializeField] private PlayerDeath playerDeath;
+    [SerializeField] private GameSession gameSession;
 
+    private float maxHealth;
     private float nextDamageTime = 0f;
     private float currentHealth;
     private float deathState = 0;
@@ -19,6 +18,7 @@ public class PlayerStats : MonoBehaviour
     private void Start() 
     {
         // Set Player's health to max at the start of the game
+        maxHealth = gameSession.CalcualteHealth();
         currentHealth = maxHealth;
         healthBar.SetSliderMax(maxHealth);
     }
