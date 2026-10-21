@@ -5,7 +5,6 @@ public class PlayerStats : MonoBehaviour
     // Fields that take from other scripts
     [SerializeField] private DeathScreenUI deathScreenUI;
     [SerializeField] private PlayerDeath playerDeath;
-    [SerializeField] private GameSession gameSession;
 
     // Variable fields that can be edited in Unity
     [SerializeField] private float baseMaxHealth;
@@ -25,7 +24,7 @@ public class PlayerStats : MonoBehaviour
     private void Start() 
     {
         // Set Player's health to max at the start of the game (Each upgrade increases health by 1)
-        maxHealth = baseMaxHealth + (healthPerUpgrade * 1);
+        maxHealth = baseMaxHealth + (healthPerUpgrade * GameSession.Instance.HealthUpgradesCollected);
         currentHealth = maxHealth;
         healthBar.SetSliderMax(maxHealth);
     }
