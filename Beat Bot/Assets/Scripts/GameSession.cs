@@ -1,40 +1,44 @@
 using UnityEngine;
 
 public class GameSession : MonoBehaviour
-{
-    private static GameSession Instance;
+{   
+    // Variable that other scripts can read, but only GameSession can change
+    public static GameSession Instance {get; private set; }
 
-    [SerializeField] private float baseHealth;
-    [SerializeField] private float healthUpgradesCollected;
+    // Variables Fields
     [SerializeField] private string currentCheckpointID;
     [SerializeField] private string currentCheckpointScene;
 
-    private int maxHealth;
+    // Variables to allow other scripts to read checkpoint data
     public string CurrentCheckpointID => currentCheckpointID;
     public string CurrentCheckpointScene => currentCheckpointScene;
 
+    // Variables 
+    private int healthUpgradesCollected;
 
+    // Return # of Upgrades Collected when called
+    public int HealthUpgradesCollected => healthUpgradesCollected;
+    // 
     private void Awake()
     {
-        // If we already have an instance, don't create another one
-        if(Instance != null && Instance != .this)
+        // Check if a GameSession already exists (don't want duplicate sessions)
+        if(Instance != null && Instance != this)
         {
-            destroy(GameObject);
+            Destroy(gameObject);
             return;
         }
+
+        // If it's the first session, keep it
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    public void setCheckpoint(string sceneName, string checkpointID)
+    // Set checkpoint to new checkpoint ID
+    public void SetCheckpoint(string sceneName, string checkpointID)
     {
         currentCheckpointScene = sceneName;
         currentCheckpointID = checkpointID;
     }
 
-    public float CalculateHealth()
-    {
-        maxHealth = baseHealth + GameSession.Instance.healthUpgradesCollected;
-        return maxHealth;
-    }
-    // Keeps all values between scene reloads
-    DontDestroyOnLoad(gameObject);
+
 }

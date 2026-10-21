@@ -2,23 +2,30 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField] private float takeDamageCooldown;
+    // Fields that take from other scripts
     [SerializeField] private DeathScreenUI deathScreenUI;
     [SerializeField] private PlayerDeath playerDeath;
     [SerializeField] private GameSession gameSession;
 
+    // Variable fields that can be edited in Unity
+    [SerializeField] private float baseMaxHealth;
+    [SerializeField] private float healthPerUpgrade;
+    [SerializeField] private float takeDamageCooldown;
+
+    // Variables
     private float maxHealth;
     private float nextDamageTime = 0f;
     private float currentHealth;
     private float deathState = 0;
+
+    // Death State & Health Bar
     private bool isDeadYet = false;
     public HealthBar healthBar;
     
-
     private void Start() 
     {
-        // Set Player's health to max at the start of the game
-        maxHealth = gameSession.CalcualteHealth();
+        // Set Player's health to max at the start of the game (Each upgrade increases health by 1)
+        maxHealth = baseMaxHealth + (healthPerUpgrade * 1);
         currentHealth = maxHealth;
         healthBar.SetSliderMax(maxHealth);
     }

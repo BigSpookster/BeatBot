@@ -3,11 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class PlayerDeath : MonoBehaviour
 {
+    // Fields
     private SpriteRenderer playerSprite;
     private PlayerMovement playerMovement;
     private Rigidbody2D rb;
     private Collider2D playerCollider;
 
+    // Gets current values of player components
     private void Awake()
     {
         // Grab current component values of player
@@ -17,6 +19,35 @@ public class PlayerDeath : MonoBehaviour
         playerCollider = GetComponent<Collider2D>();
     }
 
+    // When the player dies, make sure a GameSession exists and find the checkpoint
+    private void Start()
+    {
+        // Make sure a GameSession exists
+        if(GameSession.Instance == null)
+        {
+            return;
+        }
+
+        // Make sure the saved checkpoint belongs to the scene
+        if(GameSession.Instance.CurrentCheckpointScene != SceneManager.GetActiveScene().name)
+        {
+            return;
+        }
+
+        // Find the correct checkpoint by saved ID
+        Checkpoint[] checkpoints = FindObjectsByType<Checkpoint>(FindObjectsSortMode.None);
+
+        // Find the checkpoint whose ID matches the saved ID
+        foreach(Checkpoint checkpoint in checkpoints)
+        {
+            // Make the checkpoint ID match the saved ID
+            if(checkpoint.CheckpointID == GameSession.Instance.CurrentCheckpointID)
+            {
+                transform.position = checkpoint.SpawnPosition;
+                break;
+            }
+        }
+    } 
     // Called when player dies
     public void HandleDeath()
     {
