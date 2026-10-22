@@ -1,4 +1,3 @@
-
 {
     "version": 1,
     "name": "PlayerInput",
@@ -38,6 +37,15 @@
                     "name": "Right",
                     "type": "Button",
                     "id": "c5ff9c7c-1ca5-421e-b883-b49a1785f38b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "c5280f8d-769e-4d35-aa4c-c595fd3147e9",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -119,6 +127,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd273538-d584-4a7a-abc7-873eb23a3277",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2846e6e4-a0f1-413d-bd4f-d680a16e296b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
