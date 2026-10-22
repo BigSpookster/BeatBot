@@ -1,8 +1,12 @@
 using UnityEngine;
+using FMODUnity;
 
 public class ChargeEnemy : Enemy
 {
     [SerializeField] private float ChargeSpeed = 3f;
+
+    [SerializeField] private EventReference attackSound;
+
     private bool isCharging = false;
 
     protected override void Awake()

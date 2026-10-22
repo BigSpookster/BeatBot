@@ -1,29 +1,30 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour
 {
-    // Player's Maximum Health
-    [SerializeField] private float maxHealth;
+    // Fields that take from other scripts
+    [SerializeField] private DeathScreenUI deathScreenUI;
+    [SerializeField] private PlayerDeath playerDeath;
 
-    // How Long Player is Invincible after taking damage
+    // Variable fields that can be edited in Unity
+    [SerializeField] private float baseMaxHealth;
+    [SerializeField] private float healthPerUpgrade;
     [SerializeField] private float takeDamageCooldown;
 
-    // Time When Player can take damage again
+    // Variables
+    private float maxHealth;
     private float nextDamageTime = 0f;
-
-    // Player's Current Health
     private float currentHealth;
-
-    // Player Loses All Health
     private float deathState = 0;
 
-    // Reference to HealthBar script
+    // Death State & Health Bar
+    private bool isDeadYet = false;
     public HealthBar healthBar;
-
+    
     private void Start() 
     {
-        // Set Player's health to max at the start of the game
+        // Set Player's health to max at the start of the game (Each upgrade increases health by 1)
+        maxHealth = baseMaxHealth + (healthPerUpgrade * GameSession.Instance.HealthUpgradesCollected);
         currentHealth = maxHealth;
         healthBar.SetSliderMax(maxHealth);
     }
@@ -61,24 +62,31 @@ public class PlayerStats : MonoBehaviour
         // If Statement - Damage Test (Press K to take damage)
         if(Input.GetKeyDown(KeyCode.K))
         {
-            TakeDamage(20f);
+            TakeDamage(1f);
         }
 
         // If Statement - Heal Test (Press H to heal player)
         if(Input.GetKeyDown(KeyCode.H))
         {
-            Heal(20f);
+            Heal(1f);
         }
 
         // If Statement - Death State (If player health reaches 0, player is dead)
-        if(currentHealth <= deathState) {
+        if(currentHealth <= deathState && !isDeadYet) {
             Die();
         }
     }
 
     private void Die() 
     {
-        Debug.Log("You have died!");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // Change death state to true
+        isDeadYet = true;
+
+        // Deactivate player
+        playerDeath.HandleDeath();
+
+        // Show death screen
+        deathScreenUI.ShowDeathScreen();
     }
+
 }

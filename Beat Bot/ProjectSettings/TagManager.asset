@@ -13,10 +13,10 @@ TagManager:
   - UI
   - Player
   - NPCBody
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Background
+  - Enemy
+  - Weapon
   - 
   - 
   - 
@@ -41,11 +41,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
-    uniqueID: 2564777541
-    locked: 0
   - name: Player
     uniqueID: 2405573729
+    locked: 0
+  - name: New Layer 3
+    uniqueID: 3966572695
+    locked: 0
+  - name: Background
+    uniqueID: 2564777541
     locked: 0
   m_RenderingLayers:
   - Default
