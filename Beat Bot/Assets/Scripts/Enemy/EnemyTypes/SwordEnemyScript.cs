@@ -1,9 +1,12 @@
 using UnityEngine;
+using FMODUnity;
 
 public class SwordEnemyScript : Enemy
 {
     private CapsuleCollider2D swordCollider = null;
     private SpriteRenderer swordSprite = null;
+
+    [SerializeField] private EventReference attackSound;
 
     protected override void Awake()
     {
@@ -49,6 +52,7 @@ public class SwordEnemyScript : Enemy
             {
                 Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
                 CheckForLeftOrRightFacing(directionOfPlayer);
+                MusicManager.instance.PlayOneShotSound(attackSound, this.transform.position);
                 EnableSword();
 
             }
