@@ -1,76 +1,77 @@
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerCombat : MonoBehaviour
 {
-    
     [Header("Attack Input")]
     [SerializeField] private InputActionReference attackInput;
 
     [Header("Combo Settings")]
     [SerializeField] private int maxCombo = 3;
-    //Used to know what attack animation is next
     [SerializeField] private float comboResetTime = 0.8f;
 
-    //Used to keep track of the current combo length/state
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+
+    private PlayerMovement movement;
+    [SerializeField] private GameObject attackHitbox;
+
+
     private int currentCombo = 0;
     private float comboTimer = 0f;
     private bool isAttacking = false;
     private bool canQueueNextAttack = false;
     private bool attackQueued = false;
 
-    //This runs when the combat script is in use.
+    private void Awake()
+    {
+        movement = GetComponent<PlayerMovement>();
+    }
+
     private void OnEnable()
     {
-        //This runs if an attack is inputted by the player.
         if (attackInput != null)
             attackInput.action.Enable();
     }
-    //This runs if the combat script is not in use or ends use.
+
     private void OnDisable()
     {
         if (attackInput != null)
             attackInput.action.Disable();
     }
-    //This runs every frame to check for player input and manage the combo timer.
+
     private void Update()
     {
         if (attackInput == null)
             return;
 
-        // Read attack input using Unity's new Input System.
         if (attackInput.action.WasPressedThisFrame())
-        {
             HandleAttackInput();
-        }
 
-        // Reset the combo if too much time passes.
         if (!isAttacking && currentCombo > 0)
         {
             comboTimer -= Time.deltaTime;
 
             if (comboTimer <= 0f)
-            {
                 currentCombo = 0;
-            }
         }
     }
-    //This is used to decide what happens when the player presses the attack button.
+
     private void HandleAttackInput()
     {
-        //If the player is not attacking/comboing, it starts from the beginning.
         if (!isAttacking)
         {
+            if (comboTimer <= 0f)
+                currentCombo = 0;
+
             StartAttack();
         }
-        //If the player is in the middle of a combo, it loads the next attack.
         else if (canQueueNextAttack && currentCombo < maxCombo)
         {
             attackQueued = true;
         }
     }
-    //This is used to start the next attack in the combo
+
     private void StartAttack()
     {
         currentCombo++;
@@ -83,40 +84,59 @@ public class PlayerCombat : MonoBehaviour
         attackQueued = false;
         comboTimer = comboResetTime;
 
-        Debug.Log("Started Attack " + currentCombo);
+        if (animator == null || movement == null)
+            return;
+
+        // Use the same direction for the attack and its lunge.
+        bool attackRight = movement.FacingRight;
+        string direction = attackRight ? "R" : "L";
+
+        animator.Play("Attack" + direction + currentCombo, 0, 0f);
+
+        if (currentCombo == 3)
+            movement.LungeForward(attackRight);
     }
 
-    //Allows the player to queue the next attack in the combo.
     public void OpenComboWindow()
     {
         canQueueNextAttack = true;
     }
 
-    //Stops the player from being able to queue the next attack in the combo.
     public void CloseComboWindow()
     {
         canQueueNextAttack = false;
     }
 
-    // Call this at the end of each attack animation.
     public void EndAttack()
     {
-        isAttacking = false;
         canQueueNextAttack = false;
 
         if (attackQueued && currentCombo < maxCombo)
         {
-            StartAttack();
-        }
-        else
-        {
             attackQueued = false;
-            comboTimer = comboResetTime;
+            StartAttack();
+            return;
         }
+
+        isAttacking = false;
+        attackQueued = false;
+        comboTimer = comboResetTime;
+
+        if (animator != null)
+            animator.Play("Idle", 0, 0f);
     }
 
     public int GetCurrentCombo()
     {
         return currentCombo;
+    }
+    public void EnableAttackHitbox()
+    {
+        attackHitbox.SetActive(true);
+    }
+
+    public void DisableAttackHitbox()
+    {
+        attackHitbox.SetActive(false);
     }
 }
