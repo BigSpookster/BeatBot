@@ -213,6 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 650861754}
   - component: {fileID: 650861753}
+  - component: {fileID: 650861755}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -284,12 +285,58 @@ Transform:
   m_GameObject: {fileID: 650861752}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.1124, y: -0.0235, z: 0}
+  m_LocalPosition: {x: -2.16, y: -0.48, z: 0}
   m_LocalScale: {x: 4.5278625, y: 0.48689798, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &650861755
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650861752}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &954350153
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,6 +641,7 @@ MonoBehaviour:
   player: {fileID: 1775856049}
   smoothSpeed: 0.125
   offset: {x: 0, y: 2, z: -10}
+  yMovement: 3
 --- !u!1 &1775856048
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,8 +672,8 @@ Transform:
   m_GameObject: {fileID: 1775856048}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.64, y: -0.71, z: 0.008101223}
-  m_LocalScale: {x: -0.1139346, y: 0.08438785, z: 1}
+  m_LocalPosition: {x: -8.79, y: -0.57, z: 0.008101223}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 954350154}
@@ -668,13 +716,13 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.76, y: 8.93}
+    oldSize: {x: 0.42, y: 0.48}
     newSize: {x: 8.76, y: 8.93}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 8.76, y: 8.93}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
 --- !u!50 &1775856051
 Rigidbody2D:
@@ -747,7 +795,7 @@ SpriteRenderer:
   m_SortingLayerID: -1889393567
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2430617250240102316, guid: 97846032573a7774cb539b1ba3c5f4af, type: 3}
+  m_Sprite: {fileID: 4723107735738678597, guid: e2cc7ed2c29964a2a968d366441f1be3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -773,8 +821,14 @@ MonoBehaviour:
   speed: 5
   coyoteTime: 0.1
   jumpBufferTime: 0.1
-  horizontalMovement: {fileID: 6984017036270079600, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
+  moveLeft: {fileID: -8879547289890595552, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
+  moveRight: {fileID: 5060455312815740339, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
   jump: {fileID: -7988463625095460678, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
+  jumpCutMultiplier: 0.5
+  weaponAbility: {fileID: 5134705696063272799, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
+  dashSpeed: 14
+  dashDuration: 0.18
+  dashCooldown: 1
 --- !u!95 &1775856054
 Animator:
   serializedVersion: 7
@@ -785,7 +839,7 @@ Animator:
   m_GameObject: {fileID: 1775856048}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 92cc992eb0337f349b19280b31bc975a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
