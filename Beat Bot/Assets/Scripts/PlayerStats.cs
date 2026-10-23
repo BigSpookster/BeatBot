@@ -1,45 +1,31 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour
 {
-    // Fields that take from other scripts
-    [SerializeField] private DeathScreenUI deathScreenUI;
-    [SerializeField] private PlayerDeath playerDeath;
+    // Player's Maximum Health
+    [SerializeField] private float maxHealth;
 
-    // Variable fields that can be edited in Unity
-    [SerializeField] private float baseMaxHealth;
-    [SerializeField] private float healthPerUpgrade;
+    // How Long Player is Invincible after taking damage
     [SerializeField] private float takeDamageCooldown;
 
-    // Variables
-    private float maxHealth;
+    // Time When Player can take damage again
     private float nextDamageTime = 0f;
+
+    // Player's Current Health
     private float currentHealth;
+
+    // Player Loses All Health
     private float deathState = 0;
 
-    // Death State & Health Bar
-    private bool isDeadYet = false;
+    // Reference to HealthBar script
     public HealthBar healthBar;
-    
+
     private void Start() 
     {
-        // Set Player's health to max at the start of the game (Each upgrade increases health by 1)
-        maxHealth = baseMaxHealth + (healthPerUpgrade * GameSession.Instance.HealthUpgradesCollected);
-        
-        // If the player already has a current health status, keep it
-        if(GameSession.Instance.HasPlayerHealth)
-        {
-            currentHealth = GameSession.Instance.CurrentPlayerHealth;
-        }
-        // Otherwise, set health to max health and that's the current health status
-        else
-        {
-            currentHealth = maxHealth;
-            GameSession.Instance.SetPlayerHealth(currentHealth);
-        }
-        // Set Health Bar
+        // Set Player's health to max at the start of the game
+        currentHealth = maxHealth;
         healthBar.SetSliderMax(maxHealth);
-        healthBar.SetSlider(currentHealth);
     }
 
     // Function - Updates Player's health when they take damage
@@ -51,22 +37,26 @@ public class PlayerStats : MonoBehaviour
             return;
         }
 
-        // Update health, update player health in GameSession, then update health bar
         currentHealth -= amount;
-        GameSession.Instance.SetPlayerHealth(currentHealth);
         healthBar.SetSlider(currentHealth);
 
         // Player cannot take damage for 1 second
         nextDamageTime = Time.time + takeDamageCooldown;
     }
 
+
     public void Heal(float amount)
     {
-        // Update health, update player health in GameSession, then update health bar
+<<<<<<< Updated upstream
         currentHealth += amount;
+=======
+        // Update health, update player health in GameSession, then update health bar
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         GameSession.Instance.SetPlayerHealth(currentHealth);
+>>>>>>> Stashed changes
         healthBar.SetSlider(currentHealth);
     }
+
 
     private void Update()
     {
@@ -76,25 +66,27 @@ public class PlayerStats : MonoBehaviour
             currentHealth = maxHealth;
         }
 
+        // If Statement - Damage Test (Press K to take damage)
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            TakeDamage(20f);
+        }
+
+        // If Statement - Heal Test (Press H to heal player)
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            Heal(20f);
+        }
+
         // If Statement - Death State (If player health reaches 0, player is dead)
-        if(currentHealth <= deathState && !isDeadYet) {
+        if(currentHealth <= deathState) {
             Die();
         }
     }
 
     private void Die() 
     {
-        // Change death state to true
-        isDeadYet = true;
-
-        // Respawn the player at full health
-        GameSession.Instance.SetPlayerHealth(maxHealth);
-        
-        // Deactivate player
-        playerDeath.HandleDeath();
-
-        // Show death screen
-        deathScreenUI.ShowDeathScreen();
+        Debug.Log("You have died!");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
 }
