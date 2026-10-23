@@ -5,7 +5,6 @@ public class FlyingEnemy : Enemy
 {
     [SerializeField] private float ChargeSpeed = 3f;
 
-    [SerializeField] private EventReference windupSound;
     [SerializeField] private EventReference attackSound;
     private bool isCharging = false;
 
@@ -15,12 +14,12 @@ public class FlyingEnemy : Enemy
 
     }
 
-    public override void MoveEnemy(Vector2 normalizedVelocity, float speed)
+    public override void MoveEnemy(Vector2 velocity, float speed)
     {
-        base.MoveEnemy(normalizedVelocity, speed);
+        base.MoveEnemy(velocity, speed);
 
-        RB.linearVelocity = normalizedVelocity * speed;
-        CheckForLeftOrRightFacing(normalizedVelocity);
+        RB.linearVelocity = velocity.normalized * speed;
+        CheckForLeftOrRightFacing(velocity);
 
     }
 
@@ -52,7 +51,7 @@ public class FlyingEnemy : Enemy
             {
                 Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
                 isCharging = true;
-                MusicManager.instance.PlayOneShotSound(attackSound, this.transform.position);
+                MusicManager.Instance.PlayOneShotSound(attackSound, this.transform.position);
                 MoveEnemy(directionOfPlayer, ChargeSpeed);
 
             }

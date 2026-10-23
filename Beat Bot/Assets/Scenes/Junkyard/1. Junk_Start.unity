@@ -1004,6 +1004,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1050792320927137439, guid: 78cf9acc60f159946a584bf58717324e, type: 3}
+      propertyPath: music.Path
+      value: event:/Prototype/BackgroundMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 1050792320927137439, guid: 78cf9acc60f159946a584bf58717324e, type: 3}
+      propertyPath: music.Guid.Data1
+      value: 683832548
+      objectReference: {fileID: 0}
+    - target: {fileID: 1050792320927137439, guid: 78cf9acc60f159946a584bf58717324e, type: 3}
+      propertyPath: music.Guid.Data2
+      value: 1231021302
+      objectReference: {fileID: 0}
+    - target: {fileID: 1050792320927137439, guid: 78cf9acc60f159946a584bf58717324e, type: 3}
+      propertyPath: music.Guid.Data3
+      value: 2117950604
+      objectReference: {fileID: 0}
+    - target: {fileID: 1050792320927137439, guid: 78cf9acc60f159946a584bf58717324e, type: 3}
+      propertyPath: music.Guid.Data4
+      value: -1673432631
+      objectReference: {fileID: 0}
     - target: {fileID: 3487530320678651469, guid: 78cf9acc60f159946a584bf58717324e, type: 3}
       propertyPath: m_Name
       value: AudioManager

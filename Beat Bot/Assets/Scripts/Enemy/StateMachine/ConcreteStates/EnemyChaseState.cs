@@ -50,7 +50,7 @@ public class EnemyChaseState : EnemyState
 
         }
 
-        Vector2 moveDirection = (playerTransform.position - enemy.transform.position).normalized;
+        Vector2 moveDirection = playerTransform.position - enemy.transform.position;
 
         enemy.MoveEnemy(moveDirection, enemy.AggroedMoveSpeed);
 

@@ -46,10 +46,15 @@ public class EnemyIdleState : EnemyState
 
         }
 
-        direction = (targetPos - enemy.transform.position).normalized;
-
-        if ((enemy.transform.position - targetPos).sqrMagnitude < 0.1f)
+        if ((enemy.transform.position - targetPos).magnitude < 0.5f)
+        {
             targetPos = GetNextPosition();
+
+            Debug.Log("New Direction: " + targetPos);
+
+        }
+
+        direction = targetPos - enemy.transform.position;
 
     }
 

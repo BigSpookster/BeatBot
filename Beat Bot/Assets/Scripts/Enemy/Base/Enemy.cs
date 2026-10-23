@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     private void Update()
     {
         StateMachine.CurrentEnemyState.FrameUpdate();
-        StateMachine.CurrentEnemyState.FrameUpdate();
+
     }
 
     private void FixedUpdate()
@@ -140,7 +140,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
     /* Movement Functions: */
 
-    public virtual void MoveEnemy(Vector2 normalizedVelocity, float speed) {}
+    public virtual void MoveEnemy(Vector2 Velocity, float speed) {}
 
     public void CheckForLeftOrRightFacing(Vector2 direction)
     {
