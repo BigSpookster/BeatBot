@@ -78,13 +78,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     {
         StateMachine.CurrentEnemyState.FrameUpdate();
         StateMachine.CurrentEnemyState.FrameUpdate();
-
-        if(Input.GetKeyDown(KeyCode.J))
-        {
-            Damage(1f);
-            Debug.Log("Enemy health: " + CurrentHealth);
-        }
-
     }
 
     private void FixedUpdate()

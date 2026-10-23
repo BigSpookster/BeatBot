@@ -59,18 +59,6 @@ public class PlayerStats : MonoBehaviour
             currentHealth = maxHealth;
         }
 
-        // If Statement - Damage Test (Press K to take damage)
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDamage(1f);
-        }
-
-        // If Statement - Heal Test (Press H to heal player)
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            Heal(1f);
-        }
-
         // If Statement - Death State (If player health reaches 0, player is dead)
         if(currentHealth <= deathState && !isDeadYet) {
             Die();
