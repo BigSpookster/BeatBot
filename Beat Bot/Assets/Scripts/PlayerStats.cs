@@ -25,8 +25,21 @@ public class PlayerStats : MonoBehaviour
     {
         // Set Player's health to max at the start of the game (Each upgrade increases health by 1)
         maxHealth = baseMaxHealth + (healthPerUpgrade * GameSession.Instance.HealthUpgradesCollected);
-        currentHealth = maxHealth;
+        
+        // If the player already has a current health status, keep it
+        if(GameSession.Instance.HasPlayerHealth)
+        {
+            currentHealth = GameSession.Instance.CurrentPlayerHealth;
+        }
+        // Otherwise, set health to max health and that's the current health status
+        else
+        {
+            currentHealth = maxHealth;
+            GameSession.Instance.SetPlayerHealth(currentHealth);
+        }
+        // Set Health Bar
         healthBar.SetSliderMax(maxHealth);
+        healthBar.SetSlider(currentHealth);
     }
 
     // Function - Updates Player's health when they take damage
@@ -38,7 +51,9 @@ public class PlayerStats : MonoBehaviour
             return;
         }
 
+        // Update health, update player health in GameSession, then update health bar
         currentHealth -= amount;
+        GameSession.Instance.SetPlayerHealth(currentHealth);
         healthBar.SetSlider(currentHealth);
 
         // Player cannot take damage for 1 second
@@ -47,7 +62,9 @@ public class PlayerStats : MonoBehaviour
 
     public void Heal(float amount)
     {
+        // Update health, update player health in GameSession, then update health bar
         currentHealth += amount;
+        GameSession.Instance.SetPlayerHealth(currentHealth);
         healthBar.SetSlider(currentHealth);
     }
 
@@ -70,6 +87,9 @@ public class PlayerStats : MonoBehaviour
         // Change death state to true
         isDeadYet = true;
 
+        // Respawn the player at full health
+        GameSession.Instance.SetPlayerHealth(maxHealth);
+        
         // Deactivate player
         playerDeath.HandleDeath();
 

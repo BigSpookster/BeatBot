@@ -13,12 +13,20 @@ public class GameSession : MonoBehaviour
     public string CurrentCheckpointID => currentCheckpointID;
     public string CurrentCheckpointScene => currentCheckpointScene;
 
-    // Variables 
-    private int healthUpgradesCollected;
+    // Variables to track specific info
+    private int healthUpgradesCollected;   // How many upgrades the player has collected
+    private float currentPlayerHealth;     // How much health the player currently has
+    private bool hasPlayerHealth;          // Tracks if the player still have health
 
     // Return # of Upgrades Collected when called
     public int HealthUpgradesCollected => healthUpgradesCollected;
-    // 
+
+    // Return how much health does the player have?
+    public float CurrentPlayerHealth => currentPlayerHealth;
+
+    // Return if the player still has health
+    public bool HasPlayerHealth => hasPlayerHealth;
+    
     private void Awake()
     {
         // Check if a GameSession already exists (don't want duplicate sessions)
@@ -40,5 +48,10 @@ public class GameSession : MonoBehaviour
         currentCheckpointID = checkpointID;
     }
 
-
+    // Set the player health in the new scene
+    public void SetPlayerHealth(float health)
+    {
+        currentPlayerHealth = health;
+        hasPlayerHealth = true;
+    }
 }

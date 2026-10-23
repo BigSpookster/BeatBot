@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 9163482396647529896}
   - component: {fileID: 1590278361456747340}
   - component: {fileID: 6541171512942164984}
-  - component: {fileID: 267446312326889208}
   - component: {fileID: 7482378090775254403}
+  - component: {fileID: 2760641442105645250}
   m_Layer: 0
   m_Name: BB1
   m_TagString: Player
@@ -230,24 +230,6 @@ MonoBehaviour:
   comboResetTime: 0.8
   animator: {fileID: 1590278361456747340}
   attackHitbox: {fileID: 6710318747267251900}
---- !u!114 &267446312326889208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3670630395917056243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdd81c70a96552149821270bd023dfb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deathScreenUI: {fileID: 0}
-  playerDeath: {fileID: 7482378090775254403}
-  baseMaxHealth: 5
-  healthPerUpgrade: 0
-  takeDamageCooldown: 1
-  healthBar: {fileID: 0}
 --- !u!114 &7482378090775254403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,6 +242,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4555712a5dc924489ef48c56a003f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2760641442105645250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3670630395917056243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b662d2d0ef9c6a740880dc92ccdc185d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathScreenUI: {fileID: 0}
+  playerDeath: {fileID: 0}
+  baseMaxHealth: 0
+  healthPerUpgrade: 0
+  takeDamageCooldown: 0
+  healthBar: {fileID: 0}
 --- !u!1 &4104790657760831447
 GameObject:
   m_ObjectHideFlags: 0

@@ -469,7 +469,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7482378090775254403, guid: 1db8f07c0661d864089e85848b5a8e80, type: 3}
   m_PrefabInstance: {fileID: 2041831425}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2041831426}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4555712a5dc924489ef48c56a003f41, type: 3}
@@ -955,8 +955,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3670630395917056243, guid: 1db8f07c0661d864089e85848b5a8e80, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2041831427}
   m_SourcePrefab: {fileID: 100100000, guid: 1db8f07c0661d864089e85848b5a8e80, type: 3}
+--- !u!1 &2041831426 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3670630395917056243, guid: 1db8f07c0661d864089e85848b5a8e80, type: 3}
+  m_PrefabInstance: {fileID: 2041831425}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2041831427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041831426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b662d2d0ef9c6a740880dc92ccdc185d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathScreenUI: {fileID: 1939272463}
+  playerDeath: {fileID: 1030344652}
+  baseMaxHealth: 3
+  healthPerUpgrade: 0
+  takeDamageCooldown: 1
+  healthBar: {fileID: 5408008802906743893}
 --- !u!1001 &112329462818321933
 PrefabInstance:
   m_ObjectHideFlags: 0
