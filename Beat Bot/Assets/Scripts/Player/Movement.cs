@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float coyoteTime = 0.1f;
     public float jumpBufferTime = 0.1f;
+    public float maxJumpHeight = 10f;
 
     // Dash
     private bool isDashing;
@@ -112,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 10f);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, maxJumpHeight);
             jumpBufferCounter = 0f;
             coyoteTimeCounter = 0f;
         }

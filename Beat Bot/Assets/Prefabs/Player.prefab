@@ -156,17 +156,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.019611359, y: 0.006202489}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.42, y: 0.47}
+    oldSize: {x: 1.75, y: 1.9583334}
     newSize: {x: 1.75, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 1.2874622, y: 1.8875287}
   m_EdgeRadius: 0
 --- !u!114 &9163482396647529896
 MonoBehaviour:
@@ -183,13 +183,14 @@ MonoBehaviour:
   speed: 5
   coyoteTime: 0.1
   jumpBufferTime: 0.1
+  maxJumpHeight: 14
   moveLeft: {fileID: -8879547289890595552, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
   moveRight: {fileID: 5060455312815740339, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
   jump: {fileID: -7988463625095460678, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
-  jumpCutMultiplier: 0.5
+  jumpCutMultiplier: 0.3
   weaponAbility: {fileID: 5134705696063272799, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
   dashSpeed: 14
-  dashDuration: 0.18
+  dashDuration: 0.25
   dashCooldown: 1
 --- !u!95 &1590278361456747340
 Animator:
@@ -256,9 +257,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathScreenUI: {fileID: 0}
   playerDeath: {fileID: 0}
-  baseMaxHealth: 0
-  healthPerUpgrade: 0
-  takeDamageCooldown: 0
+  baseMaxHealth: 10
+  healthPerUpgrade: 2
+  takeDamageCooldown: 1
   healthBar: {fileID: 0}
 --- !u!1 &4104790657760831447
 GameObject:
