@@ -44,19 +44,13 @@ public class PlayerStats : MonoBehaviour
         nextDamageTime = Time.time + takeDamageCooldown;
     }
 
-
     public void Heal(float amount)
     {
-<<<<<<< Updated upstream
-        currentHealth += amount;
-=======
         // Update health, update player health in GameSession, then update health bar
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         GameSession.Instance.SetPlayerHealth(currentHealth);
->>>>>>> Stashed changes
         healthBar.SetSlider(currentHealth);
     }
-
 
     private void Update()
     {

@@ -88,13 +88,13 @@ public class PlayerCombat : MonoBehaviour
             return;
 
         // Use the same direction for the attack and its lunge.
-        bool attackRight = movement.FacingRight;
-        string direction = attackRight ? "R" : "L";
+        // bool attackRight = movement.FacingRight;
+        // string direction = attackRight ? "R" : "L";
 
-        animator.Play("Attack" + direction + currentCombo, 0, 0f);
+        // animator.Play("Attack" + direction + currentCombo, 0, 0f);
 
-        if (currentCombo == 3)
-            movement.LungeForward(attackRight);
+        // if (currentCombo == 3)
+            // movement.LungeForward(attackRight);
     }
 
     public void OpenComboWindow()

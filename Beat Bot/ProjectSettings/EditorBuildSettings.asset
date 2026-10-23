@@ -9,47 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Testing/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/Junkyard/1. Junk_Start.unity
+    path: Assets/Scenes/Junkyard/Junkyard_1.unity
     guid: fa184155acffe2f47b864f3af009fd21
-<<<<<<< Updated upstream
-=======
-  - enabled: 0
-    path: Assets/Scenes/Testing/BeatBot.unity
-    guid: 90029cf53587b0a4583cf4a8e516bb2d
-  - enabled: 0
-    path: Assets/Scenes/Testing/UI&CheckpointTest.unity
-    guid: e41baa01ca4dff343aa8dc9486a4d091
-  - enabled: 1
-    path: Assets/Scenes/Junkyard/2. Junk_2.unity
-    guid: 6501e23bc64d88342a84210aeaeecdba
-  - enabled: 1
-    path: Assets/Scenes/Junkyard/3. Junk_3.unity
-    guid: 85c3f07a1abc4fb4d961138ec5cae1c7
-  - enabled: 1
-    path: Assets/Scenes/Junkyard/4. Junk_4.unity
-    guid: 41dadc7e7a65280479b1d25612b4fe12
-  - enabled: 1
-    path: Assets/Scenes/Junkyard/6. Junk_BOSS.unity
-    guid: 45a92fefbcc0aeb448732eb9b1cdabd0
-  - enabled: 1
-    path: Assets/Scenes/Junkyard/7. Junk_End.unity
-    guid: 16d4e6232f6b6e247a597b188146a37d
-  - enabled: 0
-    path: Assets/Scenes/Testing/BeatTrackTest.unity
-    guid: 6f16b9fb27a99a64fae6733590ecc66c
-  - enabled: 0
-    path: Assets/Scenes/Testing/TEST_Junkyard.unity
-    guid: 8f7786eea19e3ba4087583a1eb8a81fa
-  - enabled: 0
-    path: Assets/Scenes/Testing/TestUI.unity
-    guid: a3c577a96c37c964db79e7a81754df8e
-  - enabled: 1
-    path: Assets/Scenes/Junkyard/5. Junk_Boss-Prep.unity
-    guid: 3fb1beba5d6107149af036e55548d212
-  - enabled: 1
-    path: Assets/Scenes/Junkyard/TEMP_Junk-End.unity
-    guid: 9877ab3e2944c054387ecf3999f128d7
->>>>>>> Stashed changes
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
