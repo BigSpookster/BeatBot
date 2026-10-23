@@ -14,7 +14,13 @@ public class PlayerMovement : MonoBehaviour
     private float jumpBufferCounter;
     public float coyoteTime = 0.1f;
     public float jumpBufferTime = 0.1f;
+<<<<<<< Updated upstream:Beat Bot/Assets/Scripts/Movement.cs
     //Dash Stuff
+=======
+    public float maxJumpHeight = 10f;
+
+    // Dash
+>>>>>>> Stashed changes:Beat Bot/Assets/Scripts/Player/Movement.cs
     private bool isDashing;
     private float dashTimeCounter;
     private float dashDirection;
@@ -129,7 +135,11 @@ public class PlayerMovement : MonoBehaviour
         // Jump if the player is grounded or within coyote time
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
+<<<<<<< Updated upstream:Beat Bot/Assets/Scripts/Movement.cs
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 10);
+=======
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, maxJumpHeight);
+>>>>>>> Stashed changes:Beat Bot/Assets/Scripts/Player/Movement.cs
             jumpBufferCounter = 0f;
             coyoteTimeCounter = 0f;
         }
