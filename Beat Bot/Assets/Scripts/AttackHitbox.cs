@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class AttackHitbox : MonoBehaviour
 {
-    [SerializeField] private float damage = 3.5f;
+
+
+    private PlayerCombat playerCombat;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -10,8 +12,19 @@ public class AttackHitbox : MonoBehaviour
 
         if (enemy != null)
         {
-            enemy.Damage(damage);
-            Debug.Log("Hit " + enemy.name + " for " + damage + " damage!");
+            float attackDamage = playerCombat.GetCurrentAttackDamage();
+            int combo = playerCombat.GetCurrentCombo();
+
+
+            enemy.Damage(attackDamage);
+            Debug.Log("Attack hit enemy for " + attackDamage + " damage. Combo: " + combo);
+            
+
         }
+    }
+
+    private void Awake()
+    {
+        playerCombat = GetComponentInParent<PlayerCombat>();
     }
 }

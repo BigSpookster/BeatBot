@@ -180,4 +180,35 @@ public class PlayerCombat : MonoBehaviour
 
     }
 
+
+    public float GetCurrentAttackDamage()
+    {
+        switch (weaponManager.currentWeapon)
+        {
+            case WeaponType.Weapon1:
+                if(currentCombo == 1 || currentCombo == 2)
+                {
+                    return 3f;
+                }
+                if(currentCombo == 3)
+                {
+                    return 5f;
+                }
+                break;
+
+            case WeaponType.Weapon2:
+                if(currentCombo == 1)
+                {
+                    return 5f;
+                }
+                if(currentCombo == 2)
+                {
+                    return 10f;
+                }
+                break;
+        }
+
+        return 3f;
+    }
+
 }
