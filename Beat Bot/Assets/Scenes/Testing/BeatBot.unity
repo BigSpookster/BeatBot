@@ -438,6 +438,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 954350154}
+  - component: {fileID: 954350155}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -461,6 +462,33 @@ Transform:
   - {fileID: 1775856049}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &954350155
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954350153}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 2.75
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1518588946
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +591,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1716699419
 Transform:
   m_ObjectHideFlags: 0
@@ -744,10 +772,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1775856049}
   - component: {fileID: 1775856052}
-  - component: {fileID: 1775856051}
   - component: {fileID: 1775856050}
   - component: {fileID: 1775856053}
   - component: {fileID: 1775856054}
+  - component: {fileID: 1775856056}
   - component: {fileID: 1775856055}
   m_Layer: 0
   m_Name: BB1
@@ -765,7 +793,7 @@ Transform:
   m_GameObject: {fileID: 1775856048}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.09, y: -0.5, z: 0.008101223}
+  m_LocalPosition: {x: -6.008, y: 0.534, z: 0.008101223}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -811,40 +839,13 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.42, y: 0.47}
-    newSize: {x: 1.75, y: 2}
+    newSize: {x: 0.42, y: 0.47}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 0.4, y: 0.4}
   m_EdgeRadius: 0
---- !u!50 &1775856051
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775856048}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 2.75
-  m_Material: {fileID: 6200000, guid: b6f9636429de8a5469ce60a82ca240a7, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 1
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!212 &1775856052
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -894,7 +895,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.75, y: 2}
+  m_Size: {x: 0.42, y: 0.47}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -915,6 +916,7 @@ MonoBehaviour:
   speed: 5
   coyoteTime: 0.1
   jumpBufferTime: 0.1
+  lungeDuration: 0.2
   moveLeft: {fileID: -8879547289890595552, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
   moveRight: {fileID: 5060455312815740339, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
   jump: {fileID: -7988463625095460678, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
@@ -962,6 +964,21 @@ MonoBehaviour:
   comboResetTime: 0.8
   animator: {fileID: 1775856054}
   attackHitbox: {fileID: 239308057}
+--- !u!114 &1775856056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775856048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4d0ef1226088034491830dbb31d9012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeapon: 0
+  swapWeapon1: {fileID: 4466606668281725550, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
+  swapWeapon2: {fileID: 682643185271688400, guid: 14dce993a28e6cd499cae05436628e14, type: 3}
 --- !u!1001 &661341423610539323
 PrefabInstance:
   m_ObjectHideFlags: 0

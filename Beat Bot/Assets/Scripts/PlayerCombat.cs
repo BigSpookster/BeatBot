@@ -14,6 +14,8 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Animator animator;
 
     private PlayerMovement movement;
+    private WeaponManager weaponManager;
+
     [SerializeField] private GameObject attackHitbox;
 
 
@@ -22,10 +24,12 @@ public class PlayerCombat : MonoBehaviour
     private bool isAttacking = false;
     private bool canQueueNextAttack = false;
     private bool attackQueued = false;
+    private bool hasAirAttacked = false;
 
     private void Awake()
     {
         movement = GetComponent<PlayerMovement>();
+        weaponManager = GetComponent<WeaponManager>();
     }
 
     private void OnEnable()
@@ -42,6 +46,12 @@ public class PlayerCombat : MonoBehaviour
 
     private void Update()
     {
+        if (movement.IsGrounded)
+        {
+            hasAirAttacked = false;
+        }
+
+
         if (attackInput == null)
             return;
 
@@ -58,19 +68,27 @@ public class PlayerCombat : MonoBehaviour
     }
 
     private void HandleAttackInput()
+{
+    if (!isAttacking)
     {
-        if (!isAttacking)
+        if (!movement.IsGrounded)
         {
-            if (comboTimer <= 0f)
-                currentCombo = 0;
+            if (weaponManager.currentWeapon == WeaponType.Weapon1 && !hasAirAttacked)
+                StartAirAttack();
 
-            StartAttack();
+            return;
         }
-        else if (canQueueNextAttack && currentCombo < maxCombo)
-        {
-            attackQueued = true;
-        }
+
+        if (comboTimer <= 0f)
+            currentCombo = 0;
+
+        StartAttack();
     }
+    else if (movement.IsGrounded && canQueueNextAttack && currentCombo < maxCombo)
+    {
+        attackQueued = true;
+    }
+}
 
     private void StartAttack()
     {
@@ -93,8 +111,8 @@ public class PlayerCombat : MonoBehaviour
 
         animator.Play("Attack" + direction + currentCombo, 0, 0f);
 
-        if (currentCombo == 3)
-            movement.LungeForward(attackRight);
+
+
     }
 
     public void OpenComboWindow()
@@ -109,6 +127,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void EndAttack()
     {
+        Debug.Log("EndAttack event fired!");
         canQueueNextAttack = false;
 
         if (attackQueued && currentCombo < maxCombo)
@@ -139,4 +158,26 @@ public class PlayerCombat : MonoBehaviour
     {
         attackHitbox.SetActive(false);
     }
+
+    private void StartAirAttack(){
+        hasAirAttacked = true;
+        isAttacking = true;
+        canQueueNextAttack = false;
+        attackQueued = false;
+        comboTimer = comboResetTime;
+
+        currentCombo = 0;
+        comboTimer = 0f;
+
+        if(animator == null || movement == null)
+        {
+            return;
+        }
+
+        string direction = movement.FacingRight ? "R" : "L";
+
+        animator.Play("AAW1" + direction, 0, 0f);
+
+    }
+
 }
