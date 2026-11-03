@@ -8,15 +8,19 @@ public class GameSession : MonoBehaviour
     // Variables Fields
     [SerializeField] private string currentCheckpointID;
     [SerializeField] private string currentCheckpointScene;
-
-    // Variables to allow other scripts to read checkpoint data
-    public string CurrentCheckpointID => currentCheckpointID;
-    public string CurrentCheckpointScene => currentCheckpointScene;
-
+    
     // Variables to track specific info
     private int healthUpgradesCollected;   // How many upgrades the player has collected
     private float currentPlayerHealth;     // How much health the player currently has
     private bool hasPlayerHealth;          // Tracks if the player still have health
+    private string nextSpawnPointID;       // Tracks where player should appear in next room/scene
+    private string nextSpawnScene;         // Tracks which scene player should appear in next
+    
+    // Variables to allow other scripts to read checkpoint data
+    public string CurrentCheckpointID => currentCheckpointID;
+    public string CurrentCheckpointScene => currentCheckpointScene;
+    public string NextSpawnPointID => nextSpawnPointID;
+    public string NextSpawnScene => nextSpawnScene;
 
     // Return # of Upgrades Collected when called
     public int HealthUpgradesCollected => healthUpgradesCollected;
@@ -53,5 +57,24 @@ public class GameSession : MonoBehaviour
     {
         currentPlayerHealth = health;
         hasPlayerHealth = true;
+    }
+
+    // Set entry point where player should appear in a scene
+    public void SetNextSpawnPoint(string sceneName, string spawnPointID)
+    {
+        nextSpawnScene = sceneName;
+        nextSpawnPointID = spawnPointID;
+
+        Debug.Log(
+        "Next scene: " + nextSpawnScene +
+        " | Spawn ID: " + nextSpawnPointID
+        );
+    }
+
+    // Clear entry point
+    public void ClearNextSpawnPoint()
+    {
+        nextSpawnScene = "";
+        nextSpawnPointID = "";
     }
 }

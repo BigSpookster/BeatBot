@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.21, y: -1.16, z: 0}
-  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -147,4 +147,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedb78e827dac8e47aaa5da2fb0aa586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: ExampleText (Change to Scene Name)
+  sceneName: TEMP_Junk-End
+  destinationSpawnPointID: Door(2to3)

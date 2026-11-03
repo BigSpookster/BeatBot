@@ -21,13 +21,54 @@ public class PlayerDeath : MonoBehaviour
 
     // When the player dies, make sure a GameSession exists and find the checkpoint
     private void Start()
-    {
+    {   
         // Make sure a GameSession exists
         if(GameSession.Instance == null)
         {
             return;
         }
 
+        // SceneSpawnPont logic (For room-to-room traversal)
+        // Check if player entered the scene from another scene
+        if(GameSession.Instance.NextSpawnScene == SceneManager.GetActiveScene().name)
+        {
+            Debug.Log("Trying to spawn in scene: " + GameSession.Instance.NextSpawnScene + " | Looking for ID: " + GameSession.Instance.NextSpawnPointID);
+
+            SceneSpawnPoint[] spawnPoints = FindObjectsByType<SceneSpawnPoint>(FindObjectsSortMode.None);
+
+            Debug.Log("Number of SceneSpawnPoints found: " + spawnPoints.Length);
+
+            foreach(SceneSpawnPoint spawnPoint in spawnPoints)
+            {
+                Debug.Log(
+                "Found SceneSpawnPoint on object: " +
+                spawnPoint.gameObject.name +
+                " | ID: " +
+                spawnPoint.SpawnPointID
+                );
+
+                if(spawnPoint.SpawnPointID == GameSession.Instance.NextSpawnPointID)
+                {
+                    Debug.Log(
+                    "MATCH FOUND: " +
+                    spawnPoint.SpawnPointID
+                    );
+                    transform.position = spawnPoint.transform.position;
+
+                    GameSession.Instance.ClearNextSpawnPoint();
+
+                    return;
+                }
+            }
+
+            Debug.LogError(
+            "No SceneSpawnPoint matched ID: " +
+            GameSession.Instance.NextSpawnPointID
+            );
+            return;
+        }
+
+        // Checkpoint logic (Death/SavePoint Respawning)
         // Make sure the saved checkpoint belongs to the scene
         if(GameSession.Instance.CurrentCheckpointScene != SceneManager.GetActiveScene().name)
         {
@@ -62,6 +103,15 @@ public class PlayerDeath : MonoBehaviour
     // Reload the scene at the respawn point
     public void ReloadScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // If we have a saved checkpoint scene, return to it
+        if(GameSession.Instance != null && !string.IsNullOrEmpty(GameSession.Instance.CurrentCheckpointScene))
+        {
+            SceneManager.LoadScene(GameSession.Instance.CurrentCheckpointScene);
+        }
+        // Otherwise, just reload the scene we died in
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
