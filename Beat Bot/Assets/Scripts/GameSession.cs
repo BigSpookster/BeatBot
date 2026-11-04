@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameSession : MonoBehaviour
+public class GameSession : MonoBehaviour, IDataPersistence
 {   
     // Variable that other scripts can read, but only GameSession can change
     public static GameSession Instance {get; private set; }
@@ -10,7 +10,7 @@ public class GameSession : MonoBehaviour
     [SerializeField] private string currentCheckpointScene;
     
     // Variables to track specific info
-    private int healthUpgradesCollected;   // How many upgrades the player has collected
+    [SerializeField] private int healthUpgradesCollected;   // How many upgrades the player has collected
     private float currentPlayerHealth;     // How much health the player currently has
     private bool hasPlayerHealth;          // Tracks if the player still have health
     private string nextSpawnPointID;       // Tracks where player should appear in next room/scene
@@ -76,5 +76,16 @@ public class GameSession : MonoBehaviour
     {
         nextSpawnScene = "";
         nextSpawnPointID = "";
+    }
+
+    //
+    public void LoadData(GameData data)
+    {
+        healthUpgradesCollected = data.healthUpgradesCollected;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.healthUpgradesCollected = healthUpgradesCollected;
     }
 }

@@ -290,6 +290,7 @@ MonoBehaviour:
   - {fileID: 0}
   AggroedMoveSpeed: 1.75
   InAttackState: 0
+  gravityStrength: 1
   attackSound:
     Guid:
       Data1: 0
@@ -389,7 +390,7 @@ GameObject:
   - component: {fileID: 3989152713914191759}
   - component: {fileID: 3123963704069309510}
   - component: {fileID: 3296718823217690125}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hurtbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
