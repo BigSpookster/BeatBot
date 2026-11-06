@@ -49,15 +49,6 @@ public class EnemyAttackState : EnemyState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-
-        if (justEnteredState)
-        {
-            // Stop the enemy
-            enemy.MoveEnemy(new Vector2 (0, 0), 0);
-
-            justEnteredState = false;
-
-        }
         
     }
 

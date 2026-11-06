@@ -1,7 +1,7 @@
 using FMODUnity;
 using UnityEngine;
 
-public class FlyingEnemy : Enemy
+public class FlyingEnemy : AirEnemy
 {
     [SerializeField] private float ChargeSpeed = 3f;
 
@@ -11,15 +11,6 @@ public class FlyingEnemy : Enemy
     protected override void Awake()
     {
         base.Awake();
-
-    }
-
-    public override void MoveEnemy(Vector2 velocity, float speed)
-    {
-        base.MoveEnemy(velocity, speed);
-
-        RB.linearVelocity = velocity.normalized * speed;
-        CheckForLeftOrRightFacing(velocity);
 
     }
 

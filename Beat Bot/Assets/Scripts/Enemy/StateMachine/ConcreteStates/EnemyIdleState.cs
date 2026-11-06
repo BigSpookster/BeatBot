@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyIdleState : EnemyState
@@ -25,7 +26,7 @@ public class EnemyIdleState : EnemyState
 
         numPatrolPoints = enemy.patrolPoints.Length;
 
-        targetPos = GetNextPosition();
+        GetNextPosition();
 
     }
 
@@ -46,13 +47,13 @@ public class EnemyIdleState : EnemyState
 
         }
 
-        if ((enemy.transform.position - targetPos).magnitude < 0.5f)
-        {
-            targetPos = GetNextPosition();
+        // For ground enemies, only focus on horizontal distance to target position
+        if (enemy.isGroundEnemy && Mathf.Abs(enemy.transform.position.x - targetPos.x) < 0.1f)
+            GetNextPosition();
 
-            Debug.Log("New Direction: " + targetPos);
-
-        }
+        // Air enemy made it to target position
+        else if (!enemy.isGroundEnemy && (enemy.transform.position - targetPos).magnitude < 0.1f)
+            GetNextPosition();
 
         direction = targetPos - enemy.transform.position;
 
@@ -66,14 +67,12 @@ public class EnemyIdleState : EnemyState
         
     }
 
-    private Vector3 GetNextPosition()
+    private void GetNextPosition()
     {
-        Vector3 tempVector = new Vector3(enemy.patrolPoints[nextPos].position.x, enemy.patrolPoints[nextPos].position.y);
+        targetPos = new Vector3(enemy.patrolPoints[nextPos].position.x, enemy.patrolPoints[nextPos].position.y);
 
         // Increment nextPos
         nextPos = (nextPos + 1) % numPatrolPoints;
-
-        return tempVector;
 
     }
 
