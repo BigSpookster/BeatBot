@@ -33,34 +33,46 @@ public class SwordEnemy : GroundEnemy
 
     protected override void Attack()
     {
-        // If we have not reached the next attack, decrement
-        if (nextAttack > 0)
+        base.Attack();
+
+        if (isAttacking)
         {
-            nextAttack--;
-
-            // If the sword is enabled, we want to disable it
-            if (swordCollider.enabled)
-                DisableSword();
-
-        }
-
-        // Otherwise, toggle the sword and reset nextAttack
-        else
-        {
-            // Only perform the attack if enemy is in attack state!
-            if (InAttackState)
+            switch (attackStage)
             {
-                Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
-                CheckForLeftOrRightFacing(directionOfPlayer);
-                MusicManager.Instance.PlayOneShotSound(attackSound, this.transform.position);
-                EnableSword();
+                // Get ready to swing!
+                case 0:
+                    FreezeInPlace();
+                    break;
+
+                // Initiate the attack
+                case 1:
+                    InitiateSwing();
+                    break;
+
+                // Finish the attack
+                case 2:
+                    DisableSword();
+                    break;
 
             }
+
+            attackStage++;
 
             nextAttack = attackInterval - 1;
 
         }
 
+    }
+
+    private void InitiateSwing()
+    {
+        // Make sure the attack faces the player
+        Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
+        CheckForLeftOrRightFacing(directionOfPlayer);
+        MusicManager.Instance.PlayOneShotSound(attackSound, this.transform.position);
+        
+        EnableSword();
+        
     }
 
     // Enables the sword's sprite and collider

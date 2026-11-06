@@ -25,7 +25,14 @@ public class GroundEnemy : Enemy
         }
 
         RB.linearVelocity = new Vector2(xDirection * speed, RB.linearVelocity.y + Time.fixedDeltaTime * Physics.gravity.y * gravityStrength);
-        CheckForLeftOrRightFacing(velocity);   
+        CheckForLeftOrRightFacing(velocity);
+
+    }
+
+    protected void FreezeInPlace()
+    {
+        RB.linearVelocity = new Vector2(0, RB.linearVelocity.y + Time.fixedDeltaTime * Physics.gravity.y * gravityStrength);
+
     }
 
 

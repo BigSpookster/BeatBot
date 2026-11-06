@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyAttackState : EnemyState
 {
-    private bool justEnteredState;
+    Vector2 moveDirection;
     public EnemyAttackState(Enemy enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {
 
@@ -18,7 +18,6 @@ public class EnemyAttackState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        justEnteredState = true;
         enemy.InAttackState = true;
 
     }
@@ -42,6 +41,7 @@ public class EnemyAttackState : EnemyState
             return;
             
         }
+        
 
 
     }

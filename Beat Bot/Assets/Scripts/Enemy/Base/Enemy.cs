@@ -15,7 +15,9 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     public Rigidbody2D RB {get; set;}
 
     [SerializeField] protected int attackInterval = 1;
+    [SerializeField] public bool isAttacking = false;
     protected int nextAttack = 0;
+    protected int attackStage = 0;
 
     /*  The following code is for using the markers,
         which I'm unsure is useful right now
@@ -89,8 +91,21 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
     }
 
+    /* Attack Functions */
+
     // A base enemy has no specific attack
-    protected virtual void Attack() {}
+    protected virtual void Attack()
+    {
+        // If we have not reached the next attack, decrement
+        if (!isAttacking && nextAttack > 0)
+            nextAttack--;
+
+
+        // We reached the attack
+        else if (!isAttacking && IsWithinStrikingDistance && nextAttack <= 0)
+            isAttacking = true;
+
+    }
 
     /* Animation Triggers */
 

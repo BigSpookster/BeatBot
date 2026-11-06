@@ -3,6 +3,8 @@ using UnityEngine;
 public class EnemyChaseState : EnemyState
 {
     private Transform playerTransform;
+
+    private Vector2 moveDirection;
     public EnemyChaseState(Enemy enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -35,10 +37,9 @@ public class EnemyChaseState : EnemyState
         base.FrameUpdate();
 
         // Enter Attack State
-        if (enemy.IsWithinStrikingDistance)
+        if (enemy.isAttacking)
         {
             enemy.StateMachine.ChangeState(enemy.AttackState);
-            return;
 
         }
 
@@ -50,15 +51,19 @@ public class EnemyChaseState : EnemyState
 
         }
 
-        Vector2 moveDirection = playerTransform.position - enemy.transform.position;
+        // Make enemy stop moving towards player when they get close enough to strike
+        if (enemy.IsWithinStrikingDistance)
+            moveDirection = new Vector2(0, 0);
 
-        enemy.MoveEnemy(moveDirection, enemy.AggroedMoveSpeed);
+        else
+            moveDirection = playerTransform.position - enemy.transform.position;
 
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        enemy.MoveEnemy(moveDirection, enemy.AggroedMoveSpeed);
         
     }
 
