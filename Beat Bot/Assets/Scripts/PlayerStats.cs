@@ -24,7 +24,7 @@ public class PlayerStats : MonoBehaviour
     private void Start() 
     {
         // Set Player's health to max at the start of the game (Each upgrade increases health by 1)
-        maxHealth = baseMaxHealth + (healthPerUpgrade * GameSession.Instance.HealthUpgradesCollected);
+        UpdateMaxHealth();
         
         // If the player already has a current health status, keep it
         if(GameSession.Instance.HasPlayerHealth)
@@ -38,7 +38,6 @@ public class PlayerStats : MonoBehaviour
             GameSession.Instance.SetPlayerHealth(currentHealth);
         }
         // Set Health Bar
-        healthBar.SetSliderMax(maxHealth);
         healthBar.SetSlider(currentHealth);
     }
 
@@ -80,6 +79,15 @@ public class PlayerStats : MonoBehaviour
         if(currentHealth <= deathState && !isDeadYet) {
             Die();
         }
+    }
+
+    public void UpdateMaxHealth()
+    {
+        // Update max health based on # of health upgrades collected
+        maxHealth = baseMaxHealth + (healthPerUpgrade * GameSession.Instance.HealthUpgradesCollected);
+
+        // Update health bar to reflect max health
+        healthBar.SetSliderMax(maxHealth);
     }
 
     private void Die() 

@@ -2826,6 +2826,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1475737191}
     - target: {fileID: 2760641442105645250, guid: 1db8f07c0661d864089e85848b5a8e80, type: 3}
+      propertyPath: baseMaxHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2760641442105645250, guid: 1db8f07c0661d864089e85848b5a8e80, type: 3}
       propertyPath: deathScreenUI
       value: 
       objectReference: {fileID: 678286868}

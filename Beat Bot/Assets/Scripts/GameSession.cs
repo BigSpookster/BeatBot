@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameSession : MonoBehaviour, IDataPersistence
 {   
@@ -9,8 +10,10 @@ public class GameSession : MonoBehaviour, IDataPersistence
     [SerializeField] private string currentCheckpointID;
     [SerializeField] private string currentCheckpointScene;
     
+    private HashSet<string> collectedHealthUpgradeIDs = new HashSet<string>();
+
     // Variables to track specific info
-    [SerializeField] private int healthUpgradesCollected;   // How many upgrades the player has collected
+    private int healthUpgradesCollected;   // How many upgrades the player has collected
     private float currentPlayerHealth;     // How much health the player currently has
     private bool hasPlayerHealth;          // Tracks if the player still have health
     private string nextSpawnPointID;       // Tracks where player should appear in next room/scene
@@ -78,14 +81,64 @@ public class GameSession : MonoBehaviour, IDataPersistence
         nextSpawnPointID = "";
     }
 
-    //
+    // Loads save data from file
     public void LoadData(GameData data)
     {
-        healthUpgradesCollected = data.healthUpgradesCollected;
+        // Recalculate number of collected health upgrades
+        collectedHealthUpgradeIDs.Clear();
+
+        if(data.healthUpgradesCollected != null)
+        {
+            foreach(var upgrade in data.healthUpgradesCollected)
+            {
+                if(upgrade.Value)
+                {
+                    collectedHealthUpgradeIDs.Add(upgrade.Key);
+                }
+            }
+        }
+
+        healthUpgradesCollected = collectedHealthUpgradeIDs.Count;
+
+        this.currentCheckpointID = data.checkpointID;
+        this.currentCheckpointScene = data.checkpointScene;
+
+        // Clears Spawnpoint to prevent old spawnpoint interferring
+        ClearNextSpawnPoint();
+
+        hasPlayerHealth = false;
     }
 
+    // Saves game data to file
     public void SaveData(ref GameData data)
     {
-        data.healthUpgradesCollected = healthUpgradesCollected;
+        if(data.healthUpgradesCollected == null)
+        {
+            data.healthUpgradesCollected =
+                new SerializableDictionary<string, bool>();
+        }
+
+        data.healthUpgradesCollected.Clear();
+
+        foreach(string upgradeID in collectedHealthUpgradeIDs)
+        {
+            data.healthUpgradesCollected[upgradeID] = true;
+        }
+        
+        data.checkpointID = this.currentCheckpointID;
+        data.checkpointScene = this.currentCheckpointScene;
+    }
+
+    public void AddHealthUpgrade(string upgradeID)
+    {
+        if(collectedHealthUpgradeIDs.Add(upgradeID))
+        {
+            healthUpgradesCollected = collectedHealthUpgradeIDs.Count;
+        }
+    }
+
+    public bool HasCollectedHealthUpgrade(string upgradeID)
+    {
+        return collectedHealthUpgradeIDs.Contains(upgradeID);
     }
 }
