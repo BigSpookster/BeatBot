@@ -36,13 +36,6 @@ public class EnemyChaseState : EnemyState
     {
         base.FrameUpdate();
 
-        // Enter Attack State
-        if (enemy.isAttacking)
-        {
-            enemy.StateMachine.ChangeState(enemy.AttackState);
-
-        }
-
         // Enter Idle State
         if (!enemy.IsAggroed)
         {
@@ -51,19 +44,17 @@ public class EnemyChaseState : EnemyState
 
         }
 
-        // Make enemy stop moving towards player when they get close enough to strike
-        if (enemy.IsWithinStrikingDistance)
-            moveDirection = new Vector2(0, 0);
-
-        else
-            moveDirection = playerTransform.position - enemy.transform.position;
+        moveDirection = playerTransform.position - enemy.transform.position;
 
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        enemy.MoveEnemy(moveDirection, enemy.AggroedMoveSpeed);
+        
+        // Only handle movement if enemy is not attacking.
+        if (!enemy.isAttacking)
+            enemy.MoveEnemy(moveDirection, enemy.AggroedMoveSpeed);
         
     }
 

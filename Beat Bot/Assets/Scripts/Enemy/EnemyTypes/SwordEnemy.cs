@@ -7,6 +7,7 @@ public class SwordEnemy : GroundEnemy
     private SpriteRenderer swordSprite = null;
 
     [SerializeField] private EventReference attackSound;
+    [SerializeField] private EventReference attackWindup;
 
     protected override void Awake()
     {
@@ -41,24 +42,36 @@ public class SwordEnemy : GroundEnemy
             {
                 // Get ready to swing!
                 case 0:
+                    MusicManager.Instance.PlayOneShotSound(attackWindup, this.transform.position);
                     FreezeInPlace();
                     break;
 
                 // Initiate the attack
-                case 1:
+                case 2:
+                    MusicManager.Instance.PlayOneShotSound(attackSound, this.transform.position);
                     InitiateSwing();
                     break;
 
                 // Finish the attack
-                case 2:
+                case 3:
                     DisableSword();
+                    break;
+
+                // Done attacking
+                case 4:
+                    isAttacking = false;
+                    attackStage = 0;
                     break;
 
             }
 
-            attackStage++;
+            // If the attack is over, set the next attack
+            if (!isAttacking)
+                nextAttack = attackInterval - 1;
+                
 
-            nextAttack = attackInterval - 1;
+            else
+                attackStage++;
 
         }
 
