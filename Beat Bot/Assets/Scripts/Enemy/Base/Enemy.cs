@@ -3,6 +3,9 @@ using FMODUnity;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckable
 {
+    // This variable will only be set to true in the GroundEnemy class
+    public bool isGroundEnemy = false;
+
     protected Transform playerTransform;
 
     [field: SerializeField] public float MaxHealth {get; set;}
@@ -77,13 +80,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     private void Update()
     {
         StateMachine.CurrentEnemyState.FrameUpdate();
-        StateMachine.CurrentEnemyState.FrameUpdate();
-
-        if(Input.GetKeyDown(KeyCode.J))
-        {
-            Damage(1f);
-            Debug.Log("Enemy health: " + CurrentHealth);
-        }
 
     }
 
@@ -147,7 +143,7 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
     /* Movement Functions: */
 
-    public virtual void MoveEnemy(Vector2 normalizedVelocity, float speed) {}
+    public virtual void MoveEnemy(Vector2 velocity, float speed) {}
 
     public void CheckForLeftOrRightFacing(Vector2 direction)
     {

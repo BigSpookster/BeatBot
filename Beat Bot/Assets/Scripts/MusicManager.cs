@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 public class MusicManager : MonoBehaviour
 {
-    public static MusicManager instance;
+    public static MusicManager Instance {get; private set;}
 
     [SerializeField] private FMODUnity.EventReference music;
 
@@ -35,7 +35,17 @@ public class MusicManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+
+        }
+
+        
+        Instance = this;
+
+        DontDestroyOnLoad(gameObject);
 
         if (!music.IsNull)
         {
@@ -62,10 +72,19 @@ public class MusicManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        musicInstance.setUserData(IntPtr.Zero);
-        musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        musicInstance.release();
-        timelineHandle.Free();
+        if (Instance == this)
+        {
+            musicInstance.setUserData(IntPtr.Zero);
+            musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            musicInstance.release();
+
+            if (timelineHandle.IsAllocated)
+            {
+                timelineHandle.Free();
+            }
+            
+            Instance = null;
+        }
 
     }
 
@@ -109,10 +128,10 @@ public class MusicManager : MonoBehaviour
     [AOT.MonoPInvokeCallback(typeof(FMOD.Studio.EVENT_CALLBACK))]
     static FMOD.RESULT BeatEventCallback(FMOD.Studio.EVENT_CALLBACK_TYPE type, IntPtr instancePtr, IntPtr parameterPtr)
     {
-        FMOD.Studio.EventInstance instance = new FMOD.Studio.EventInstance(instancePtr);
+        FMOD.Studio.EventInstance Instance = new FMOD.Studio.EventInstance(instancePtr);
 
         IntPtr timelineInfoPtr;
-        FMOD.RESULT result = instance.getUserData(out timelineInfoPtr);
+        FMOD.RESULT result = Instance.getUserData(out timelineInfoPtr);
 
         if (result != FMOD.RESULT.OK)
             Debug.LogError("Timeline Callback error: " + result);

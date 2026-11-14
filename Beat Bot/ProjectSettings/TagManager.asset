@@ -17,8 +17,8 @@ TagManager:
   - Ground
   - Background
   - Enemy
-  - Weapon
-  - 
+  - Hitbox
+  - Item
   - 
   - 
   - 

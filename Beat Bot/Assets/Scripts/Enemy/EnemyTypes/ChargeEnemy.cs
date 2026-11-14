@@ -1,7 +1,7 @@
 using UnityEngine;
 using FMODUnity;
 
-public class ChargeEnemy : Enemy
+public class ChargeEnemy : GroundEnemy
 {
     [SerializeField] private float ChargeSpeed = 3f;
 
@@ -12,17 +12,6 @@ public class ChargeEnemy : Enemy
     protected override void Awake()
     {
         base.Awake();
-
-    }
-
-    public override void MoveEnemy(Vector2 normalizedVelocity, float speed)
-    {
-        base.MoveEnemy(normalizedVelocity, speed);
-
-        int makeEqualOne = Mathf.RoundToInt(normalizedVelocity.x);
-
-        RB.linearVelocity = new Vector2(makeEqualOne * speed, RB.linearVelocity.y);
-        CheckForLeftOrRightFacing(normalizedVelocity);
 
     }
 
@@ -54,6 +43,7 @@ public class ChargeEnemy : Enemy
             {
                 Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
                 isCharging = true;
+                MusicManager.Instance.PlayOneShotSound(attackSound, this.transform.position);
                 MoveEnemy(directionOfPlayer, ChargeSpeed);
 
             }

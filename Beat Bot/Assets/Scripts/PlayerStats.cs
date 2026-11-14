@@ -27,9 +27,21 @@ public class PlayerStats : MonoBehaviour
     private void Start() 
     {
         // Set Player's health to max at the start of the game (Each upgrade increases health by 1)
-        maxHealth = baseMaxHealth + (healthPerUpgrade * GameSession.Instance.HealthUpgradesCollected);
-        currentHealth = maxHealth;
-        healthBar.SetSliderMax(maxHealth);
+        UpdateMaxHealth();
+        
+        // If the player already has a current health status, keep it
+        if(GameSession.Instance.HasPlayerHealth)
+        {
+            currentHealth = GameSession.Instance.CurrentPlayerHealth;
+        }
+        // Otherwise, set health to max health and that's the current health status
+        else
+        {
+            currentHealth = maxHealth;
+            GameSession.Instance.SetPlayerHealth(currentHealth);
+        }
+        // Set Health Bar
+        healthBar.SetSlider(currentHealth);
     }
 
     // Function - Updates Player's health when they take damage
@@ -40,7 +52,9 @@ public class PlayerStats : MonoBehaviour
         {
             return;
         }
+        // Update health, update player health in GameSession, then update health bar
                 currentHealth -= amount;
+        GameSession.Instance.SetPlayerHealth(currentHealth);
         healthBar.SetSlider(currentHealth);
 
         // Player cannot take damage for 1 second
@@ -54,7 +68,9 @@ public class PlayerStats : MonoBehaviour
 
     public void Heal(float amount)
     {
+        // Update health, update player health in GameSession, then update health bar
         currentHealth += amount;
+        GameSession.Instance.SetPlayerHealth(currentHealth);
         healthBar.SetSlider(currentHealth);
     }
 
@@ -66,22 +82,19 @@ public class PlayerStats : MonoBehaviour
             currentHealth = maxHealth;
         }
 
-        // If Statement - Damage Test (Press K to take damage)
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDamage(1f);
-        }
-
-        // If Statement - Heal Test (Press H to heal player)
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            Heal(1f);
-        }
-
         // If Statement - Death State (If player health reaches 0, player is dead)
         if(currentHealth <= deathState && !isDeadYet) {
             Die();
         }
+    }
+
+    public void UpdateMaxHealth()
+    {
+        // Update max health based on # of health upgrades collected
+        maxHealth = baseMaxHealth + (healthPerUpgrade * GameSession.Instance.HealthUpgradesCollected);
+
+        // Update health bar to reflect max health
+        healthBar.SetSliderMax(maxHealth);
     }
 
     private void Die() 
@@ -89,6 +102,9 @@ public class PlayerStats : MonoBehaviour
         // Change death state to true
         isDeadYet = true;
 
+        // Respawn the player at full health
+        GameSession.Instance.SetPlayerHealth(maxHealth);
+        
         // Deactivate player
         playerDeath.HandleDeath();
 

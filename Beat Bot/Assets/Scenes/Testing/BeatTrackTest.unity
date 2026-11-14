@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nonRigidbodyVelocity: 0
-  attenuationObject: {fileID: 866566716}
+  attenuationObject: {fileID: 0}
 --- !u!114 &199807701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,11 +489,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1db8f07c0661d864089e85848b5a8e80, type: 3}
---- !u!1 &866566716 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1068708993042253168, guid: 1db8f07c0661d864089e85848b5a8e80, type: 3}
-  m_PrefabInstance: {fileID: 851416221}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1440881294
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,111 +520,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1566677281891067549
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3309144060216639277, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: attackSound.Path
-      value: event:/BeatTestScene/EnemyWow
-      objectReference: {fileID: 0}
-    - target: {fileID: 3309144060216639277, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: windupSound.Path
-      value: event:/BeatTestScene/EnemyHurt
-      objectReference: {fileID: 0}
-    - target: {fileID: 3309144060216639277, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: attackSound.Guid.Data1
-      value: 787725460
-      objectReference: {fileID: 0}
-    - target: {fileID: 3309144060216639277, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: attackSound.Guid.Data2
-      value: 1159201226
-      objectReference: {fileID: 0}
-    - target: {fileID: 3309144060216639277, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: attackSound.Guid.Data3
-      value: 230875041
-      objectReference: {fileID: 0}
-    - target: {fileID: 3309144060216639277, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: attackSound.Guid.Data4
-      value: -623129494
-      objectReference: {fileID: 0}
-    - target: {fileID: 3309144060216639277, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: windupSound.Guid.Data1
-      value: -1618253896
-      objectReference: {fileID: 0}
-    - target: {fileID: 3309144060216639277, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: windupSound.Guid.Data2
-      value: 1162899486
-      objectReference: {fileID: 0}
-    - target: {fileID: 3309144060216639277, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: windupSound.Guid.Data3
-      value: -1887848051
-      objectReference: {fileID: 0}
-    - target: {fileID: 3309144060216639277, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: windupSound.Guid.Data4
-      value: -1122396950
-      objectReference: {fileID: 0}
-    - target: {fileID: 3309144060216639277, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: 'patrolPoints.Array.data[0]'
-      value: 
-      objectReference: {fileID: 351152665}
-    - target: {fileID: 3309144060216639277, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: 'patrolPoints.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1440881295}
-    - target: {fileID: 3437272655017659823, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: m_Name
-      value: FlyingEnemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061647476010837523, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.11
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061647476010837523, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061647476010837523, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.039446123
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061647476010837523, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061647476010837523, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061647476010837523, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061647476010837523, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061647476010837523, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061647476010837523, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061647476010837523, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dd06a03a81c8d8f4bb6b0b16ae71aeb2, type: 3}
 --- !u!1001 &2323562468008470739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -699,4 +589,3 @@ SceneRoots:
   - {fileID: 351152665}
   - {fileID: 1440881295}
   - {fileID: 851416221}
-  - {fileID: 1566677281891067549}

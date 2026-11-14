@@ -1,7 +1,7 @@
 using UnityEngine;
 using FMODUnity;
 
-public class SwordEnemyScript : Enemy
+public class SwordEnemy : GroundEnemy
 {
     private CapsuleCollider2D swordCollider = null;
     private SpriteRenderer swordSprite = null;
@@ -52,7 +52,7 @@ public class SwordEnemyScript : Enemy
             {
                 Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
                 CheckForLeftOrRightFacing(directionOfPlayer);
-                MusicManager.instance.PlayOneShotSound(attackSound, this.transform.position);
+                MusicManager.Instance.PlayOneShotSound(attackSound, this.transform.position);
                 EnableSword();
 
             }
@@ -60,17 +60,6 @@ public class SwordEnemyScript : Enemy
             nextAttack = attackInterval - 1;
 
         }
-
-    }
-
-    public override void MoveEnemy(Vector2 normalizedVelocity, float speed)
-    {
-        base.MoveEnemy(normalizedVelocity, speed);
-
-        int makeEqualOne = Mathf.RoundToInt(normalizedVelocity.x);
-
-        RB.linearVelocity = new Vector2(makeEqualOne * speed, RB.linearVelocity.y);
-        CheckForLeftOrRightFacing(normalizedVelocity);
 
     }
 

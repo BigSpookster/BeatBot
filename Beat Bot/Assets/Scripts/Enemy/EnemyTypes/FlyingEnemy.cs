@@ -1,26 +1,16 @@
 using FMODUnity;
 using UnityEngine;
 
-public class FlyingEnemy : Enemy
+public class FlyingEnemy : AirEnemy
 {
     [SerializeField] private float ChargeSpeed = 3f;
 
-    [SerializeField] private EventReference windupSound;
     [SerializeField] private EventReference attackSound;
     private bool isCharging = false;
 
     protected override void Awake()
     {
         base.Awake();
-
-    }
-
-    public override void MoveEnemy(Vector2 normalizedVelocity, float speed)
-    {
-        base.MoveEnemy(normalizedVelocity, speed);
-
-        RB.linearVelocity = normalizedVelocity * speed;
-        CheckForLeftOrRightFacing(normalizedVelocity);
 
     }
 
@@ -52,7 +42,7 @@ public class FlyingEnemy : Enemy
             {
                 Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
                 isCharging = true;
-                MusicManager.instance.PlayOneShotSound(attackSound, this.transform.position);
+                MusicManager.Instance.PlayOneShotSound(attackSound, this.transform.position);
                 MoveEnemy(directionOfPlayer, ChargeSpeed);
 
             }
