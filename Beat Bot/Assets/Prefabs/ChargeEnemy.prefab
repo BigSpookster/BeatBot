@@ -189,23 +189,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0d1ea5a6352f241bc027f6231e00f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGroundEnemy: 0
   <MaxHealth>k__BackingField: 10
   attackInterval: 4
+  isAttacking: 0
   MovementSpeed: 1
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
   AggroedMoveSpeed: 1.75
-  InAttackState: 0
-  ChargeSpeed: 12
-  gravityStrength: 1
   attackSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -601804590
+      Data2: 1238425210
+      Data3: -752601719
+      Data4: 435734468
+    Path: event:/Enemies/GroundEnemyAttack
+  attackWindup:
+    Guid:
+      Data1: 807777443
+      Data2: 1338765787
+      Data3: 156633769
+      Data4: -246639466
+    Path: event:/Enemies/SwordEnemyWindup1
+  gravityStrength: 1
+  ChargeSpeed: 12
 --- !u!1 &2849040147210623010
 GameObject:
   m_ObjectHideFlags: 0

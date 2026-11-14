@@ -10,4 +10,11 @@ public class AirEnemy : Enemy
         CheckForLeftOrRightFacing(velocity);
 
     }
+
+    protected void FreezeInPlace()
+    {
+        RB.linearVelocity = new Vector2(0, 0);
+
+    }
+    
 }
