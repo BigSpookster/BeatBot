@@ -37,7 +37,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     public EnemyStateMachine StateMachine {get; set;}
     public EnemyIdleState IdleState {get; set;}
     public EnemyChaseState ChaseState {get; set;}
-    public EnemyAttackState AttackState {get; set;}
 
     /* Idle Variables */
     public float MovementSpeed = 1f;
@@ -47,8 +46,9 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     /* Chase Variables */
     public float AggroedMoveSpeed = 1.75f;
 
-    /* Attack State Variables */
-    public bool InAttackState = false;
+    /* Sound Effect Variables */
+    [SerializeField] protected EventReference attackSound;
+    [SerializeField] protected EventReference attackWindup;
     
     protected virtual void Awake()
     {
@@ -63,7 +63,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 
         IdleState = new EnemyIdleState(this, StateMachine);
         ChaseState = new EnemyChaseState(this, StateMachine);
-        AttackState = new EnemyAttackState(this, StateMachine);
 
         MusicManager.beatUpdated += Attack;
 

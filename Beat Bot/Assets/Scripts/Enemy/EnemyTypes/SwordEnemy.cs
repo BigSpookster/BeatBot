@@ -6,8 +6,10 @@ public class SwordEnemy : GroundEnemy
     private CapsuleCollider2D swordCollider = null;
     private SpriteRenderer swordSprite = null;
 
-    [SerializeField] private EventReference attackSound;
-    [SerializeField] private EventReference attackWindup;
+    private CapsuleCollider2D upAttackCollider = null;
+    private SpriteRenderer upAttackSprite = null;
+
+    [SerializeField] private float minAngle = 60f;
 
     protected override void Awake()
     {
@@ -28,6 +30,21 @@ public class SwordEnemy : GroundEnemy
         else
             Debug.Log("Error: sword child was not found...");
 
+        // Finding the UpAttack child
+        checkChildTranform = transform.Find("UpAttack");
+
+        // If it exists, get the sword's collider and sprite
+        if (checkChildTranform != null)
+        {
+            upAttackCollider = checkChildTranform.GetComponent<CapsuleCollider2D>();
+            upAttackSprite = checkChildTranform.GetComponent<SpriteRenderer>();
+
+        }
+
+        // Otherwise, there might be an error
+        else
+            Debug.Log("Error: UpAttack child was not found...");
+
     }
 
     
@@ -46,7 +63,7 @@ public class SwordEnemy : GroundEnemy
                     FreezeInPlace();
                     break;
 
-                // Initiate the attack
+                // Skip 1 beat, then initiate the attack
                 case 2:
                     MusicManager.Instance.PlayOneShotSound(attackSound, this.transform.position);
                     InitiateSwing();
@@ -81,11 +98,27 @@ public class SwordEnemy : GroundEnemy
     {
         // Make sure the attack faces the player
         Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
-        CheckForLeftOrRightFacing(directionOfPlayer);
-        MusicManager.Instance.PlayOneShotSound(attackSound, this.transform.position);
+
+        // Check if the player is above the sword enemy
+        float angle = Mathf.Atan2(directionOfPlayer.y, directionOfPlayer.x) * Mathf.Rad2Deg;
+        if (angle >= minAngle && angle <= 180 - minAngle)
+            EnableUpAttack();
+
+        else
+        {
+            CheckForLeftOrRightFacing(directionOfPlayer);
+            
+            EnableSword();
+
+        }
         
-        EnableSword();
-        
+    }
+
+    private void EnableUpAttack()
+    {
+        upAttackCollider.enabled = true;
+        upAttackSprite.enabled = true;
+
     }
 
     // Enables the sword's sprite and collider
@@ -96,11 +129,14 @@ public class SwordEnemy : GroundEnemy
 
     }
 
-    // Disables the sword's sprite and collider
+    // Disables the sword's sprite and collider, even for UpAttacks
     private void DisableSword()
     {
         swordCollider.enabled = false;
         swordSprite.enabled = false;
+
+        upAttackCollider.enabled = false;
+        upAttackSprite.enabled = false;
 
     }
 

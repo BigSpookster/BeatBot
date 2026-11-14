@@ -361,29 +361,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ba0f750b999e54b9e5edd497a64d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGroundEnemy: 0
   <MaxHealth>k__BackingField: 10
   attackInterval: 4
+  isAttacking: 0
   MovementSpeed: 1
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
   AggroedMoveSpeed: 1.75
-  InAttackState: 0
-  ChargeSpeed: 14
-  windupSound:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
   attackSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 706566784
+      Data2: 1114547766
+      Data3: -653824834
+      Data4: 1587319949
+    Path: event:/Enemies/FlyingEnemyAttack
+  attackWindup:
+    Guid:
+      Data1: 807777443
+      Data2: 1338765787
+      Data3: 156633769
+      Data4: -246639466
+    Path: event:/Enemies/SwordEnemyWindup1
+  ChargeSpeed: 14
 --- !u!1 &6212302775748561721
 GameObject:
   m_ObjectHideFlags: 0

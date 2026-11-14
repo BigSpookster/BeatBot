@@ -5,9 +5,6 @@ public class FlyingEnemy : AirEnemy
 {
     [SerializeField] private float ChargeSpeed = 3f;
 
-    [SerializeField] private EventReference attackSound;
-    private bool isCharging = false;
-
     protected override void Awake()
     {
         base.Awake();
@@ -18,38 +15,51 @@ public class FlyingEnemy : AirEnemy
     {
         base.Attack();
 
-        // If we have not reached the next attack, decrement
-        if (nextAttack > 0)
+        if (isAttacking)
         {
-            nextAttack--;
-
-            if (isCharging)
+            switch(attackStage)
             {
-                // Go back to chase state after charging
-                StateMachine.ChangeState(ChaseState);
+                case 0:
+                    MusicManager.Instance.PlayOneShotSound(attackWindup, this.transform.position);
+                    FreezeInPlace();
+                    break;
 
-                isCharging = false;
+                // Skip 1 beat, then initiate the attack
+                case 2:
+                    MusicManager.Instance.PlayOneShotSound(attackSound, this.transform.position);
+                    charge();
+                    break;
+
+                // Finish the attack by freezing again
+                case 3:
+                    FreezeInPlace();
+                    break;
+
+                // Done attacking
+                case 4:
+                    isAttacking = false;
+                    attackStage = 0;
+                    break;
+
+            }
+            
+            // If the attack is over, set the next attack
+            if (!isAttacking)
+                nextAttack = attackInterval - 1;
                 
-            }
+
+            else
+                attackStage++;
 
         }
 
-        // Otherwise, toggle the sword and reset nextAttack
-        else
-        {
-            // Only perform the attack if enemy is in attack state!
-            if (InAttackState)
-            {
-                Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
-                isCharging = true;
-                MusicManager.Instance.PlayOneShotSound(attackSound, this.transform.position);
-                MoveEnemy(directionOfPlayer, ChargeSpeed);
 
-            }
+    }
 
-            nextAttack = attackInterval - 1;
-
-        }
+    private void charge()
+    {
+        Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
+        MoveEnemy(directionOfPlayer, ChargeSpeed);
 
     }
     
