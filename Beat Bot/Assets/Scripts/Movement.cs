@@ -5,6 +5,8 @@ public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
 
+    private bool movementLocked = false;
+    private bool jumpingLocked = false;
     // Direction
     private bool facingRight = false;
     public bool FacingRight => facingRight;
@@ -37,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Weapon Swap Stuff
     private WeaponManager weaponManager;
-
+    private PlayerCombat playerCombat;
     //Double Jump Stuff
     private int jumpsRemaining = 2;
     private bool canDoubleJump;
@@ -58,12 +60,17 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Rigidbody found: " + rb.name);
         anim = GetComponent<Animator>();
         weaponManager = GetComponent<WeaponManager>();
+        playerCombat = GetComponent<PlayerCombat>();
     }
 
     private void Update()
     {
         canDoubleJump = weaponManager.currentWeapon == WeaponType.Weapon2;
         canDash = weaponManager.currentWeapon == WeaponType.Weapon1;
+        if (weaponManager.currentWeapon == WeaponType.Weapon3 && weaponAbility.action.WasPressedThisFrame())
+        {
+            playerCombat.ActivateShield();
+        }
         bool leftPressed = moveLeft.action.IsPressed();
         bool rightPressed = moveRight.action.IsPressed();
 
@@ -83,6 +90,11 @@ public class PlayerMovement : MonoBehaviour
                 horizontal = 1f;
         }
         else
+        {
+            horizontal = 0f;
+        }
+
+        if (movementLocked)
         {
             horizontal = 0f;
         }
@@ -123,15 +135,22 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
 
         // Jump buffer
-        if (jump.action.WasPressedThisFrame())
+        if (jumpingLocked)
+        {
+            jumpBufferCounter = 0f;
+        }
+        else if (jump.action.WasPressedThisFrame())
+        {
             jumpBufferCounter = jumpBufferTime;
+        }
         else
+        {
             jumpBufferCounter -= Time.deltaTime;
-
+        }
         bool FirstJump = jumpsRemaining == 2 && (isGrounded || coyoteTimeCounter > 0f);
         bool SecondJump = canDoubleJump && jumpsRemaining == 1 && !isGrounded;
 
-        if (jumpBufferCounter > 0f && (FirstJump || SecondJump))
+        if (!jumpingLocked && jumpBufferCounter > 0f && (FirstJump || SecondJump))
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 10f);
            
@@ -253,5 +272,17 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("LungeRight event fired!");
 
         LungeForward(false);
+    }
+
+    public void SetMovementLocked(bool locked)
+    {
+        movementLocked = locked;
+        jumpingLocked = locked;
+
+        if (movementLocked && rb != null)
+        {
+            horizontal = 0f;
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+        }
     }
 }
