@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,28 +5,44 @@ public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
 
+    private bool movementLocked = false;
+    private bool jumpingLocked = false;
     // Direction
     private bool facingRight = false;
     public bool FacingRight => facingRight;
 
     [SerializeField] private float speed;
+    
 
     private Rigidbody2D rb;
     private Animator anim;
     private bool isGrounded;
+    public bool IsGrounded => isGrounded;
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
 
     public float coyoteTime = 0.1f;
     public float jumpBufferTime = 0.1f;
-    public float maxJumpHeight = 10f;
 
-    // Dash
+    // Attack Stuff
+    [SerializeField] private float lungeDuration = 0.2f;
+    private float lungeTimer;
+    private bool isLunging;
+
+    //Dash Stuff
+    private bool canDash;
     private bool isDashing;
     private float dashTimeCounter;
     private float dashDirection;
     private float dashCooldownCounter;
     private bool hasAirDashed;
+
+    //Weapon Swap Stuff
+    private WeaponManager weaponManager;
+    private PlayerCombat playerCombat;
+    //Double Jump Stuff
+    private int jumpsRemaining = 2;
+    private bool canDoubleJump;
 
     [SerializeField] private InputActionReference moveLeft;
     [SerializeField] private InputActionReference moveRight;
@@ -41,12 +56,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponentInParent<Rigidbody2D>();
+        Debug.Log("Rigidbody found: " + rb.name);
         anim = GetComponent<Animator>();
+        weaponManager = GetComponent<WeaponManager>();
+        playerCombat = GetComponent<PlayerCombat>();
     }
 
     private void Update()
     {
+        canDoubleJump = weaponManager.currentWeapon == WeaponType.Weapon2;
+        canDash = weaponManager.currentWeapon == WeaponType.Weapon1;
+        if (weaponManager.currentWeapon == WeaponType.Weapon3 && weaponAbility.action.WasPressedThisFrame())
+        {
+            playerCombat.ActivateShield();
+        }
         bool leftPressed = moveLeft.action.IsPressed();
         bool rightPressed = moveRight.action.IsPressed();
 
@@ -70,6 +94,11 @@ public class PlayerMovement : MonoBehaviour
             horizontal = 0f;
         }
 
+        if (movementLocked)
+        {
+            horizontal = 0f;
+        }
+
         // Remember the last direction pressed.
         if (horizontal < 0f)
             facingRight = false;
@@ -80,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetFloat("MoveX", horizontal);
 
         // Weapon ability dash
-        if (weaponAbility.action.WasPressedThisFrame() && !isDashing)
+        if (canDash && weaponAbility.action.WasPressedThisFrame() && !isDashing)
         {
             if (isGrounded && dashCooldownCounter <= 0f)
                 StartDash();
@@ -106,25 +135,45 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
 
         // Jump buffer
-        if (jump.action.WasPressedThisFrame())
-            jumpBufferCounter = jumpBufferTime;
-        else
-            jumpBufferCounter -= Time.deltaTime;
-
-        if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
+        if (jumpingLocked)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, maxJumpHeight);
+            jumpBufferCounter = 0f;
+        }
+        else if (jump.action.WasPressedThisFrame())
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+        bool FirstJump = jumpsRemaining == 2 && (isGrounded || coyoteTimeCounter > 0f);
+        bool SecondJump = canDoubleJump && jumpsRemaining == 1 && !isGrounded;
+
+        if (!jumpingLocked && jumpBufferCounter > 0f && (FirstJump || SecondJump))
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 10f);
+           
+            jumpsRemaining--;
             jumpBufferCounter = 0f;
             coyoteTimeCounter = 0f;
         }
 
         // Variable jump height
-        if (jump.action.WasReleasedThisFrame() && rb.linearVelocity.y > 0f)
-        {
+        if (jump.action.WasReleasedThisFrame() && rb.linearVelocity.y > 0f){
             rb.linearVelocity = new Vector2(
                 rb.linearVelocity.x,
                 rb.linearVelocity.y * jumpCutMultiplier
             );
+        }
+
+        if(isLunging)
+        {
+            lungeTimer -= Time.deltaTime;
+            if(lungeTimer <= 0f)
+            {
+                isLunging = false;
+            }
         }
     }
 
@@ -137,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.linearVelocity.y
             );
         }
-        else
+        else if (!isLunging)
         {
             rb.linearVelocity = new Vector2(
                 horizontal * speed,
@@ -152,6 +201,9 @@ public class PlayerMovement : MonoBehaviour
         {
             if (contact.normal.y > 0.5f)
             {
+                 if(!isGrounded){
+                    jumpsRemaining = 2;
+                }
                 isGrounded = true;
                 hasAirDashed = false;
                 dashCooldownCounter = 0f;
@@ -197,12 +249,40 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         dashTimeCounter = dashDuration;
         dashCooldownCounter = dashCooldown;
+
+     
     }
 
-    // Attack 3 lunge in the direction selected by PlayerCombat.
+    //WIP Lunge Mechanic for weapon 1
     public void LungeForward(bool moveRight)
     {
         float direction = moveRight ? 1f : -1f;
-        rb.MovePosition(rb.position + Vector2.right * direction * 1.5f);
+        isLunging = true;
+        lungeTimer = lungeDuration;
+        rb.AddForce(Vector2.right * direction * 20f, ForceMode2D.Impulse);
+    }
+    public void LungeRight()
+    {
+            Debug.Log("LungeRight event fired!");
+
+        LungeForward(true);
+    }
+    public void LungeLeft()
+    {
+            Debug.Log("LungeRight event fired!");
+
+        LungeForward(false);
+    }
+
+    public void SetMovementLocked(bool locked)
+    {
+        movementLocked = locked;
+        jumpingLocked = locked;
+
+        if (movementLocked && rb != null)
+        {
+            horizontal = 0f;
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+        }
     }
 }

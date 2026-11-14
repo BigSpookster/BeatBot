@@ -17,6 +17,9 @@ public class PlayerStats : MonoBehaviour
     private float currentHealth;
     private float deathState = 0;
 
+    //Shield Stuff
+    private bool isShieldActive = false;
+
     // Death State & Health Bar
     private bool isDeadYet = false;
     public HealthBar healthBar;
@@ -45,18 +48,22 @@ public class PlayerStats : MonoBehaviour
     public void TakeDamage(float amount)
     {
         // If Statement - Check if damage was already taken
-        if(Time.time < nextDamageTime)
+        if (isShieldActive || Time.time < nextDamageTime)
         {
             return;
         }
-
         // Update health, update player health in GameSession, then update health bar
-        currentHealth -= amount;
+                currentHealth -= amount;
         GameSession.Instance.SetPlayerHealth(currentHealth);
         healthBar.SetSlider(currentHealth);
 
         // Player cannot take damage for 1 second
         nextDamageTime = Time.time + takeDamageCooldown;
+    }
+
+    public void SetShieldActive(bool active)
+    {
+        isShieldActive = active;
     }
 
     public void Heal(float amount)
