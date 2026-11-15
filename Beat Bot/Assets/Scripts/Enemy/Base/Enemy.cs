@@ -36,7 +36,6 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     
 
     /* State Machine Variables */
-
     public EnemyStateMachine StateMachine {get; set;}
     public EnemyIdleState IdleState {get; set;}
     public EnemyChaseState ChaseState {get; set;}

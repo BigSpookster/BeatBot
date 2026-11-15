@@ -48,7 +48,6 @@ public class ChargeEnemy : GroundEnemy
             if (!isAttacking)
                 nextAttack = attackInterval - 1;
                 
-
             else
                 attackStage++;
 
