@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8916349439875869565}
   - component: {fileID: 7174047397130242560}
   - component: {fileID: 74438379488423952}
+  - component: {fileID: 3849696461553921582}
   m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
@@ -124,6 +125,28 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.075, y: -0.035}
   m_Radius: 0.45
+--- !u!95 &3849696461553921582
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011508077357747332}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3aa34ef9585662e40ae8f8e35d1b0376, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3960931642456987843
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ba0f750b999e54b9e5edd497a64d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 3849696461553921582}
   isGroundEnemy: 0
   <MaxHealth>k__BackingField: 10
   attackInterval: 4

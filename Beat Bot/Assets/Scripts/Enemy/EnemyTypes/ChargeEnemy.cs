@@ -32,6 +32,7 @@ public class ChargeEnemy : GroundEnemy
 
                 // Finish the attack by freezing again
                 case 3:
+                    animator.SetBool("isCharging", false);
                     FreezeInPlace();
                     break;
 
@@ -58,6 +59,7 @@ public class ChargeEnemy : GroundEnemy
     private void charge()
     {
         Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
+        animator.SetBool("isCharging", true);
         MoveEnemy(directionOfPlayer, ChargeSpeed);
 
     }

@@ -3,6 +3,9 @@ using FMODUnity;
 
 public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckable
 {
+    // Enemy Animator
+    [SerializeField] protected Animator animator;
+
     // This variable will only be set to true in the GroundEnemy class
     public bool isGroundEnemy = false;
 

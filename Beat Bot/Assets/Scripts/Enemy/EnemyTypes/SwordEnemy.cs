@@ -4,7 +4,6 @@ using FMODUnity;
 public class SwordEnemy : GroundEnemy
 {
     private CapsuleCollider2D swordCollider = null;
-    private SpriteRenderer swordSprite = null;
 
     private CapsuleCollider2D upAttackCollider = null;
     private SpriteRenderer upAttackSprite = null;
@@ -20,11 +19,7 @@ public class SwordEnemy : GroundEnemy
 
         // If it exists, get the sword's collider and sprite
         if (checkChildTranform != null)
-        {
             swordCollider = checkChildTranform.GetComponent<CapsuleCollider2D>();
-            swordSprite = checkChildTranform.GetComponent<SpriteRenderer>();
-
-        }
 
         // Otherwise, there might be an error
         else
@@ -124,8 +119,8 @@ public class SwordEnemy : GroundEnemy
     // Enables the sword's sprite and collider
     private void EnableSword()
     {
+        animator.SetBool("horizontalSwing", true);
         swordCollider.enabled = true;
-        swordSprite.enabled = true;
 
     }
 
@@ -133,7 +128,7 @@ public class SwordEnemy : GroundEnemy
     private void DisableSword()
     {
         swordCollider.enabled = false;
-        swordSprite.enabled = false;
+        animator.SetBool("horizontalSwing", false);
 
         upAttackCollider.enabled = false;
         upAttackSprite.enabled = false;
