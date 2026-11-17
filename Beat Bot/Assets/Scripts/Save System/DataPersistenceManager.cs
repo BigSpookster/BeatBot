@@ -1,9 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class DataPersistenceManager : MonoBehaviour
 {
+    [Header("Debugging")]
+    [SerializeField] private bool initalizeDataIfNull = false;
+
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
     [SerializeField] private bool useEncryption;
@@ -11,24 +15,68 @@ public class DataPersistenceManager : MonoBehaviour
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
+    private bool loadDataOnNextScene = false;
+    private bool isInitialSceneLoad = true;
 
     public static DataPersistenceManager instance { get; private set; }
 
     private void Awake()
     {
-        if (instance != null)
+        if(instance != null && instance != this)
         {
-            Debug.LogError("Found more than one Data Persistence Manager in the scene.");
+            Destroy(gameObject);
+            return;
         }
+
         instance = this;
+        DontDestroyOnLoad(this.gameObject);
+
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+
+        // Read existing save data from disk when the game starts
+        this.gameData = dataHandler.Load();
+
+        // Only create temporary default data when development mode is enabled
+        if(this.gameData == null && initalizeDataIfNull)
+        {
+            NewGame();
+        }
+    }
+    
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
-    private void Start()
+    private void OnDisable()
     {
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
-        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
-        // Testing game loads data on startup
-        LoadGame();
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        this.dataPersistenceObjects =
+            FindAllDataPersistenceObjects();
+
+        if((isInitialSceneLoad || loadDataOnNextScene) &&
+        gameData != null)
+        {
+            foreach(IDataPersistence dataPersistenceObj
+                    in dataPersistenceObjects)
+            {
+                dataPersistenceObj.LoadData(gameData);
+            }
+        }
+
+        isInitialSceneLoad = false;
+        loadDataOnNextScene = false;
+    }
+
+    public void OnSceneUnloaded(Scene scene)
+    {
+        //SaveGame();
     }
 
     public void NewGame()
@@ -41,11 +89,17 @@ public class DataPersistenceManager : MonoBehaviour
         // Load any saved data from a file using the data handler
         this.gameData = dataHandler.Load();
 
-        // If no data can be Loaded, initialize to a new game
+        // Start a new game if the data is null and we're configured to initialize data for debugging purposes
+        if(this.gameData == null && initalizeDataIfNull)
+        {
+            NewGame();
+        }
+
+        // If no data can be Loaded, don't continue
         if(this.gameData == null)
         {
-            Debug.Log("No data was found. Initializing data to defaults");
-            NewGame();
+            Debug.Log("No data was found. A New Game needs to be started");
+            return;
         }
         // Push the loaded data to all oither scripts that need it
         foreach(IDataPersistence dataPersistenceObj in dataPersistenceObjects)
@@ -57,6 +111,13 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGame()
     {
+        // If we don't havce any data to save
+        if(this.gameData == null)
+        {
+            Debug.LogWarning("No data was found. A New Game needs to be started before data can be saved.");
+            return;
+        }
+
         // Pass the data to other scripts sop they can update it
         foreach(IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
@@ -69,7 +130,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        SaveGame();
+        //SaveGame();
     }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()
@@ -79,5 +140,25 @@ public class DataPersistenceManager : MonoBehaviour
         .OfType<IDataPersistence>();
 
         return new List<IDataPersistence>(dataPersistenceObjects);
+    }
+
+    public bool HasGameData()
+    {
+        return gameData != null;
+    }
+
+    public void PrepareForDataLoad()
+    {
+        loadDataOnNextScene = true;
+    }
+
+    public string GetCheckpointScene()
+    {
+        if(gameData == null)
+        {
+            return "";
+        }
+
+        return gameData.checkpointScene;
     }
 }

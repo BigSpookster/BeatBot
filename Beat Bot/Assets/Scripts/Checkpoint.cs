@@ -14,7 +14,21 @@ public class Checkpoint : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            GameSession.Instance.SetCheckpoint(SceneManager.GetActiveScene().name, checkpointID);
+            // Set this as the player's current checkpoint
+            GameSession.Instance.SetCheckpoint(
+                SceneManager.GetActiveScene().name,
+                checkpointID
+            );
+
+            // Save the updated checkpoint to disk
+            DataPersistenceManager.instance.SaveGame();
+
+            Debug.Log(
+                "Game saved at checkpoint: " +
+                checkpointID +
+                " | Scene: " +
+                SceneManager.GetActiveScene().name
+            );
         }
     }
 }

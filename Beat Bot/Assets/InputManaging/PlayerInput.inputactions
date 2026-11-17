@@ -106,6 +106,17 @@
                 },
                 {
                     "name": "",
+                    "id": "b5fe31ec-f8cb-464f-a4e4-1316f1de2a3c",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeaponAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "65b0c22b-433c-4a59-80c0-8d1f6ede3923",
                     "path": "<Keyboard>/a",
                     "interactions": "",
@@ -118,7 +129,7 @@
                 {
                     "name": "",
                     "id": "7dab3f80-b6ef-4e06-b67c-7bbb1265746d",
-                    "path": "",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -140,7 +151,7 @@
                 {
                     "name": "",
                     "id": "a34fac48-0147-47f4-ada0-e856d6e3a6ea",
-                    "path": "",
+                    "path": "<Gamepad>/dpad/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -151,7 +162,7 @@
                 {
                     "name": "",
                     "id": "cd273538-d584-4a7a-abc7-873eb23a3277",
-                    "path": "",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -173,7 +184,7 @@
                 {
                     "name": "",
                     "id": "f0aff253-1c93-4c34-b523-eb474f3b85a3",
-                    "path": "",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -195,7 +206,7 @@
                 {
                     "name": "",
                     "id": "639f838d-40cb-415f-8b0a-c665e977eeae",
-                    "path": "",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -211,6 +222,107 @@
                     "processors": "",
                     "groups": ";Keyboard",
                     "action": "SwapWeapon2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "d742184c-5629-4e6b-be3c-ee36e197d2be",
+            "actions": [
+                {
+                    "name": "Navigate",
+                    "type": "Value",
+                    "id": "53ce0830-6eee-4dd1-a6b6-34db54597bd3",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Submit",
+                    "type": "Button",
+                    "id": "e1b1e7a4-92e8-4643-8f7e-d48ed84bb742",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "06ed6eac-8f09-408a-9d78-24eea19ff7a0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fa129241-45da-4769-a7e4-c961d818c54c",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de0a819c-d81c-42e4-96f3-b9e21d39b229",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "502aa6a6-ea2f-40df-95cd-f61d259eca62",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8166d407-a496-43ba-8eec-c25da396a552",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "637da549-c818-4ae8-bee5-bb38cc7edaec",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "483a3ba5-ad99-4116-8da3-d36612662095",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -21,7 +21,11 @@ public class FileDataHandler
     {
         // Path.Combine just in case of using different OS
         string fullPath = Path.Combine(dataDirPath, dataFileName);
+
+        Debug.Log("Looking for save at: " + fullPath);
+        Debug.Log("Save file exists: " + File.Exists(fullPath));
         GameData loadedData = null;
+        
         if(File.Exists(fullPath))
         {
             try
