@@ -158,7 +158,7 @@ public class PlayerCombat : MonoBehaviour
             if (shieldTimer <= 0f)
             {
                 isShieldActive = false;
-
+                playerStats.SetShieldActive(false);
                 if (animator != null)
                 {
                     animator.speed = 1f;
@@ -587,6 +587,7 @@ public class PlayerCombat : MonoBehaviour
             return;
 
         isShieldActive = true;
+        playerStats.SetShieldActive(true);
         shieldTimer = shieldDuration;
         shieldCooldownTimer = shieldCooldown;
 
