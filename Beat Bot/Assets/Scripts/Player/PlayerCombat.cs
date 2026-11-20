@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,7 +23,6 @@ public class PlayerCombat : MonoBehaviour
     private PlayerMovement movement;
     private WeaponManager weaponManager;
 
-
     //Weapon 2 Serialize Field Stuff
     [SerializeField] private GameObject weapon2ProjectilePrefab;
     [SerializeField] private Transform weapon2FirePoint;
@@ -39,7 +39,6 @@ public class PlayerCombat : MonoBehaviour
     private float weapon2ReloadTimer;
     private float weapon2IdleTimer = 0f;
     private bool weapon2IsReloading = false;
-
 
     // Weapon 3 Serialize Field Ground Stuff
     [SerializeField] private GameObject weapon3SwordHitbox;
@@ -159,6 +158,7 @@ public class PlayerCombat : MonoBehaviour
             {
                 isShieldActive = false;
                 playerStats.SetShieldActive(false);
+
                 if (animator != null)
                 {
                     animator.speed = 1f;
@@ -240,6 +240,7 @@ public class PlayerCombat : MonoBehaviour
                 currentCombo = 0;
                 weapon3Attack1Used = false;
                 DisableAttackHitbox();
+                DisableWeapon3SwordHitbox();
             }
         }
     }
@@ -292,6 +293,11 @@ public class PlayerCombat : MonoBehaviour
 
         currentCombo++;
 
+        if (weaponManager.currentWeapon == WeaponType.Weapon1)
+        {
+            attackHitbox.GetComponent<AttackHitbox>().ResetHitEnemies();
+        }
+
         if (currentCombo > maxCombo)
             currentCombo = 1;
 
@@ -340,6 +346,8 @@ public class PlayerCombat : MonoBehaviour
     public void EndAttack()
     {
         DisableAttackHitbox();
+        DisableWeapon3SwordHitbox();
+
         canQueueNextAttack = false;
         isAttacking = false;
         attackQueued = false;
@@ -399,7 +407,6 @@ public class PlayerCombat : MonoBehaviour
         return 3f;
     }
 
-
     //Weapon 1 Combat Methods
     public void EnableAttackHitbox()
     {
@@ -429,7 +436,6 @@ public class PlayerCombat : MonoBehaviour
         animator.Play("AAW1" + direction, 0, 0f);
     }
 
-
     //Weapon 2 Combat Methods
     private void FireWeapon2Projectile()
     {
@@ -455,11 +461,12 @@ public class PlayerCombat : MonoBehaviour
         projectile.GetComponent<Weapon2Projectile>().Initialize(direction);
     }
 
-
     //Weapon 3 Combat Methods
     private void StartWeapon3Attack()
     {
         currentCombo = 1;
+        weapon3SwordHitbox.GetComponent<AttackHitbox>().ResetHitEnemies();
+
         isAttacking = true;
         movement.SetMovementLocked(true);
         canQueueNextAttack = false;
@@ -485,6 +492,8 @@ public class PlayerCombat : MonoBehaviour
     private void StartWeapon3AirAttack()
     {
         hasAirAttacked = true;
+        weapon3SwordHitbox.GetComponent<AttackHitbox>().ResetHitEnemies();
+
         isWeapon3AirAttacking = true;
         isAttacking = true;
 
@@ -579,6 +588,8 @@ public class PlayerCombat : MonoBehaviour
         weapon3ChargeTimer = 0f;
         currentCombo = 2;
 
+        weapon3SwordHitbox.GetComponent<AttackHitbox>().ResetHitEnemies();
+
         string direction = movement.FacingRight ? "R" : "L";
         animator.Play("Weapon3A2Release" + direction, 0, 0f);
     }
@@ -603,7 +614,8 @@ public class PlayerCombat : MonoBehaviour
         currentCombo = 0;
         comboTimer = 0f;
         weapon3Attack1Used = false;
-        DisableAttackHitbox();
 
+        DisableAttackHitbox();
+        DisableWeapon3SwordHitbox();
     }
 }

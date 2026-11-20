@@ -56,6 +56,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4697836442598492147, guid: 6103d7c9e7a8650479c736212ceb9417, type: 3}
+      propertyPath: speed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4697836442598492147, guid: 6103d7c9e7a8650479c736212ceb9417, type: 3}
+      propertyPath: dashDuration
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 5278293426221066968, guid: 6103d7c9e7a8650479c736212ceb9417, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.7
@@ -189,7 +197,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 2.75
+  m_GravityScale: 2.9
   m_Material: {fileID: 6200000, guid: b6f9636429de8a5469ce60a82ca240a7, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
