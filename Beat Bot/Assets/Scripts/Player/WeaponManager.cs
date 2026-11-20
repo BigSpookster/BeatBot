@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 public class WeaponManager : MonoBehaviour
 {
     public WeaponType currentWeapon = WeaponType.Weapon1;
 
     [SerializeField] private InputActionReference swapWeapon1;
     [SerializeField] private InputActionReference swapWeapon2;
+    [SerializeField] private PlayerCombat playerCombat;
 
     private void Update()
     {
@@ -18,8 +18,10 @@ public class WeaponManager : MonoBehaviour
             if (nextWeapon > 2)
             {
                 nextWeapon = 0;
+                
             }
             currentWeapon = (WeaponType)nextWeapon;
+            playerCombat.ResetCombo();
             Debug.Log("Current Weapon: " + currentWeapon);
        }
        if(swapWeapon2.action.WasPressedThisFrame())
@@ -31,6 +33,7 @@ public class WeaponManager : MonoBehaviour
                 previousWeapon = 2;
             }
             currentWeapon = (WeaponType)previousWeapon;
+            playerCombat.ResetCombo();
             Debug.Log("Current Weapon: " + currentWeapon);
        }
     }

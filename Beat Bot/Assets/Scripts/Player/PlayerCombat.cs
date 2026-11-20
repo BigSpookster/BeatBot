@@ -239,6 +239,7 @@ public class PlayerCombat : MonoBehaviour
             {
                 currentCombo = 0;
                 weapon3Attack1Used = false;
+                DisableAttackHitbox();
             }
         }
     }
@@ -338,6 +339,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void EndAttack()
     {
+        DisableAttackHitbox();
         canQueueNextAttack = false;
         isAttacking = false;
         attackQueued = false;
@@ -594,5 +596,14 @@ public class PlayerCombat : MonoBehaviour
         animator.speed = 1f;
         shieldAnimationTimer = 0.25f;
         animator.Play("Shield", 0, 0f);
+    }
+
+    public void ResetCombo()
+    {
+        currentCombo = 0;
+        comboTimer = 0f;
+        weapon3Attack1Used = false;
+        DisableAttackHitbox();
+
     }
 }
