@@ -22,6 +22,10 @@ public class Weapon2Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Only accept collisions from the enemy's Hurtbox
+        if (other.gameObject.name != "Hurtbox")
+            return;
+
         Enemy enemy = other.GetComponentInParent<Enemy>();
 
         if (enemy != null)

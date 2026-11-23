@@ -8,6 +8,10 @@ public class AttackHitbox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Only accept collisions from the enemy's Hurtbox
+        if (other.gameObject.name != "Hurtbox")
+            return;
+
         Enemy enemy = other.GetComponentInParent<Enemy>();
 
         if (enemy != null && enemiesHit.Add(enemy))
@@ -16,10 +20,16 @@ public class AttackHitbox : MonoBehaviour
             int combo = playerCombat.GetCurrentCombo();
 
             enemy.Damage(attackDamage);
+
+            if (enemy is GroundEnemy groundEnemy && (playerCombat.GetCurrentWeapon() == WeaponType.Weapon1 || playerCombat.GetCurrentWeapon() == WeaponType.Weapon3))
+            {
+                groundEnemy.TakeHit(transform.position);
+            }
+
             Debug.Log("Attack hit enemy for " + attackDamage + " damage. Combo: " + combo);
         }
     }
-
+    
     public void ResetHitEnemies()
     {
         enemiesHit.Clear();
@@ -29,4 +39,6 @@ public class AttackHitbox : MonoBehaviour
     {
         playerCombat = GetComponentInParent<PlayerCombat>();
     }
+
+
 }

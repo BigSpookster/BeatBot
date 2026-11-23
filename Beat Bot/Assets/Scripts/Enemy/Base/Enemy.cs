@@ -5,6 +5,8 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
 {
     // This variable will only be set to true in the GroundEnemy class
     public bool isGroundEnemy = false;
+    //Enemy knockback stuff
+    public bool IsInHitStun { get; set; }
 
     protected Transform playerTransform;
 
@@ -95,6 +97,9 @@ public class Enemy : MonoBehaviour, IDamageable, IEnemyMovable, ITriggerCheckabl
     // A base enemy has no specific attack
     protected virtual void Attack()
     {
+        if (IsInHitStun)
+            return;
+            
         // If we have not reached the next attack, decrement
         if (!isAttacking && nextAttack > 0)
             nextAttack--;

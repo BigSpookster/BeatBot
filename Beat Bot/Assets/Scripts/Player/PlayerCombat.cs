@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -617,5 +616,10 @@ public class PlayerCombat : MonoBehaviour
 
         DisableAttackHitbox();
         DisableWeapon3SwordHitbox();
+    }
+
+    public WeaponType GetCurrentWeapon()
+    {
+        return weaponManager.currentWeapon;
     }
 }

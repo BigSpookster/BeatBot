@@ -4,16 +4,23 @@ using FMODUnity;
 public class ChargeEnemy : GroundEnemy
 {
     [SerializeField] private float ChargeSpeed = 3f;
+    //Animation Stuff
+    [SerializeField] private Transform body;
+    private SpriteRenderer bodySprite;
+    private Animator animator;
 
     protected override void Awake()
     {
         base.Awake();
+        animator = GetComponent<Animator>();
+        bodySprite = body.GetComponent<SpriteRenderer>();
 
     }
 
     protected override void Attack()
     {
         base.Attack();
+        bodySprite = body.GetComponent<SpriteRenderer>();
 
         if (isAttacking)
         {
@@ -27,11 +34,13 @@ public class ChargeEnemy : GroundEnemy
                 // Skip 1 beat, then initiate the attack
                 case 2:
                     MusicManager.Instance.PlayOneShotSound(attackSound, this.transform.position);
+                    animator.SetBool("IsCharging", true);
                     charge();
                     break;
 
                 // Finish the attack by freezing again
                 case 3:
+                    animator.SetBool("IsCharging", false);
                     FreezeInPlace();
                     break;
 
@@ -58,8 +67,17 @@ public class ChargeEnemy : GroundEnemy
     private void charge()
     {
         Vector2 directionOfPlayer = (playerTransform.position - this.transform.position).normalized;
+        bodySprite.flipX = directionOfPlayer.x < 0f;
         MoveEnemy(directionOfPlayer, ChargeSpeed);
 
+    }
+
+    private void UpdateFacing()
+    {
+        if (playerTransform == null || bodySprite == null)
+            return;
+
+        bodySprite.flipX = playerTransform.position.x < transform.position.x;
     }
 
 }
