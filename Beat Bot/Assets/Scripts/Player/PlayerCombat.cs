@@ -28,8 +28,9 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private float weapon2AttackCooldown = 0.3f;
     [SerializeField] private int weapon2MagazineSize = 5;
     [SerializeField] private int weapon2AirShotLimit = 3;
-    [SerializeField] private float weapon2ReloadTime = 1.5f;
+    [SerializeField] private float weapon2ReloadTime = 1.0f;
     [SerializeField] private float weapon2IdleReloadDelay = 2.5f;
+    [SerializeField] private float weapon2GroundResetTime = 2.5f;
 
     //Weapon 2 Variables
     private float weapon2AttackTimer = 0f;
@@ -38,6 +39,7 @@ public class PlayerCombat : MonoBehaviour
     private float weapon2ReloadTimer;
     private float weapon2IdleTimer = 0f;
     private bool weapon2IsReloading = false;
+    private float weapon2GroundTimer = 0f;
 
     // Weapon 3 Serialize Field Ground Stuff
     [SerializeField] private GameObject weapon3SwordHitbox;
@@ -108,6 +110,7 @@ public class PlayerCombat : MonoBehaviour
                 isWeapon3AirPausing = false;
                 rb.gravityScale = originalGravityScale;
                 rb.linearVelocity = new Vector2(0f, -weapon3DiveSpeed);
+                weapon2GroundTimer = 0f;
             }
         }
 
@@ -129,18 +132,25 @@ public class PlayerCombat : MonoBehaviour
                 animator.Play("Idle", 0, 0f);
         }
 
-        //Resets Air Attacks and Handles Weapon 2 Landing Ammo.
+        // Resets Air Attacks and Weapon 2 air shots after staying grounded.
         if (movement.IsGrounded)
         {
             hasAirAttacked = false;
 
-            if (weapon2AirShots >= weapon2AirShotLimit)
+            if (weapon2AirShots > 0)
             {
-                weapon2CurrentAmmo = 0;
-                weapon2IdleTimer = 0f;
-            }
+                weapon2GroundTimer += Time.deltaTime;
 
-            weapon2AirShots = 0;
+                if (weapon2GroundTimer >= weapon2GroundResetTime)
+                {
+                    weapon2AirShots = 0;
+                    weapon2GroundTimer = 0f;
+                }
+            }
+        }
+        else
+        {
+            weapon2GroundTimer = 0f;
         }
 
         if (isShieldActive)
@@ -323,8 +333,13 @@ public class PlayerCombat : MonoBehaviour
             if (!movement.IsGrounded)
             {
                 weapon2AirShots++;
-            }
 
+                if (weapon2AirShots >= weapon2AirShotLimit)
+                {
+                    weapon2CurrentAmmo = 0;
+                    weapon2IdleTimer = 0f;
+                }
+            }
             weapon2IdleTimer = weapon2IdleReloadDelay;
 
             weapon2AttackTimer = weapon2AttackCooldown;
